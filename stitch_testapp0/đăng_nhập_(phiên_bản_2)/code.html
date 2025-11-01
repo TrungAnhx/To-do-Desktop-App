@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đăng nhập</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col items-center justify-center bg-background-light dark:bg-background-dark group/design-root p-4">
+<div class="flex flex-col items-center w-full max-w-md space-y-6">
+<div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary mb-4">
+<span class="material-symbols-outlined text-white" style="font-size: 28px;">task_alt</span>
+</div>
+<h1 class="text-[#111418] dark:text-white tracking-light text-[32px] font-bold leading-tight text-center">Chào mừng trở lại!</h1>
+<div class="w-full space-y-4">
+<div class="flex max-w-full flex-wrap items-end gap-4">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Email</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border-none bg-white dark:bg-background-dark h-14 placeholder:text-[#617589] p-4 rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" placeholder="Nhập email của bạn" value=""/>
+<div class="text-[#617589] flex border-none bg-white dark:bg-background-dark items-center justify-center pr-4 rounded-r-lg border-l-0">
+<span class="material-symbols-outlined">mail</span>
+</div>
+</div>
+</label>
+</div>
+<div class="flex max-w-full flex-wrap items-end gap-4">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Mật khẩu</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border-none bg-white dark:bg-background-dark h-14 placeholder:text-[#617589] p-4 rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" placeholder="Nhập mật khẩu" type="password" value=""/>
+<div class="text-[#617589] flex border-none bg-white dark:bg-background-dark items-center justify-center pr-4 rounded-r-lg border-l-0">
+<span class="material-symbols-outlined">lock</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<div class="flex w-full justify-end">
+<p class="text-primary text-sm font-medium leading-normal underline cursor-pointer">Quên mật khẩu?</p>
+</div>
+<div class="flex w-full">
+<button class="flex min-w-[84px] w-full max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+<span class="truncate">Đăng nhập</span>
+</button>
+</div>
+<div class="flex items-center w-full">
+<hr class="flex-grow border-gray-300 dark:border-gray-600"/>
+<span class="mx-4 text-sm text-gray-500 dark:text-gray-400">hoặc đăng nhập với</span>
+<hr class="flex-grow border-gray-300 dark:border-gray-600"/>
+</div>
+<div class="w-full space-y-3">
+<button class="flex items-center justify-center w-full h-12 px-5 rounded-lg bg-white dark:bg-background-dark border border-gray-300 dark:border-gray-600 text-[#111418] dark:text-white text-base font-medium leading-normal hover:bg-gray-50 dark:hover:bg-gray-700">
+<img alt="Google logo" class="w-6 h-6 mr-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWgfP4PO8cEH-HDFfOz4ypR0VeTY-TDYDp-x7PBwUhD_cuuOBrkK2wGT5mlq5vcMb4s0ljT3XaaqtytkKiAaxAMqShd35wz5Sltvo8CXEqmO-KMh56M7WFJzySS-VgpVua60H0QLitZ_XHOSNLaWIpVzszzicTZvVhUi0oHf45YO7svMMJqQHZuzT_sQ_JgwOBB-lx0dXdi-3HdXyktvKmFv_TVY5hkqQaFMMNEwWEFyL8nfWwNYzWTBP75nIItkBg1VNWTZ6rMw3V"/>
+<span class="truncate">Đăng nhập bằng Google</span>
+</button>
+<button class="flex items-center justify-center w-full h-12 px-5 rounded-lg bg-white dark:bg-background-dark border border-gray-300 dark:border-gray-600 text-[#111418] dark:text-white text-base font-medium leading-normal hover:bg-gray-50 dark:hover:bg-gray-700">
+<img alt="Microsoft logo" class="w-6 h-6 mr-3" data-src="https://img.icons8.com/color/48/microsoft.png" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_H5_nzqs-GamTgABWnpbFboq5LkxKA_vOKrwwurubgcUAlZPL0rBOV6tLj9MkRE-hxlj2bYpqAUWtRTAZgF1DeoZagDsSG-hyyA1L7MyojTAurPeJ0DPlyJIcmD9P6l5widAaOrewJnRnMe1AKkrWeXbGrerwO8i1l5lpI9rGWkiah46XaHyw-0xbbs_n3l3zUWb1GMUFVbI3W3uF4mDFNoL5Fsq3GqmVQ2eQgXFKzR08Ygs4f2xXpGjR8IEYEWFra6SkG8r_H43g"/>
+<span class="truncate">Đăng nhập bằng Microsoft</span>
+</button>
+</div>
+<p class="text-sm font-normal leading-normal text-center text-gray-600 dark:text-gray-400">
+                Chưa có tài khoản? <a class="font-bold text-primary underline" href="#">Đăng ký</a>
+</p>
+</div>
+</div>
+<script>
+        // Simple script to toggle password visibility or other interactions if needed
+        // For now, it just ensures the microsoft logo is loaded.
+        document.addEventListener('DOMContentLoaded', function() {
+            const msftButton = document.querySelector('button:last-of-type img');
+            if (msftButton) {
+                msftButton.src = msftButton.getAttribute('data-src');
+            }
+        });
+    </script>
+</body></html>

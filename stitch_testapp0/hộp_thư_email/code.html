@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inbox</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#007AFF",
+              "background-light": "#F5F5F7",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+<style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden pb-24">
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="flex size-12 shrink-0 items-center">
+<img class="rounded-full size-8" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDjDEE1faAmA8qz39HZvH0xtFbMcrGbb7zdQAWBglhNUlM0aUCWwvtGgLlHLvQGMYmM6o_QjK3F3ZbYx1bTM5tQcWl1WlrGl6nPAv1sNIfa0jpP3I-iRoQN2xDpYbyeTVR_KnRaahjqeBGvWNWsz0VLRp9F2NtmDjmY7b7YHAgHPnEaTOQaiM1CUOs5Fr1SjW31QXiqb6_cJXKoWYT8s9ALuX77TLfjS5JYO18Gwp7jhzU51HhAwpl0UYzLYrIYeBIadv9mpLAnJXM"/>
+</div>
+<h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Hộp thư đến</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-gray-900 dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</div>
+<div class="px-4 pb-3 sticky top-[72px] z-10 bg-background-light dark:bg-background-dark">
+<div class="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 dark:bg-primary/30 pl-4 pr-4">
+<p class="text-primary dark:text-white text-sm font-medium leading-normal">Tất cả</p>
+</div>
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200 dark:bg-gray-700 pl-4 pr-4">
+<p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Chưa đọc</p>
+</div>
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200 dark:bg-gray-700 pl-4 pr-4">
+<p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Có tệp đính kèm</p>
+</div>
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200 dark:bg-gray-700 pl-4 pr-4">
+<p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Được gắn cờ</p>
+</div>
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-gray-200 dark:bg-gray-700 pl-4 pr-4">
+<p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Gmail/Outlook</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col flex-1">
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-4 w-full">
+<div class="relative">
+<img class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12" data-alt="Google Calendar avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPlSTMxhqFLpXyEjB9K1ecaAGZTWoclex7CBdK7mQerPORx1iI7pA1qHVCOQob07fsCofBbIn6Mqd0oNiPQunLnFselA-I4SR1his1rcvREe9h-eSQqU0krVwBPmT4NSBXdIZ7YuA6SR9w8f0RO-Lm97qHO5NEjFSIYmsyQmkCsxoZwDNr68XlxNREGQtH4rh7-ONyrlDZXOmBIqk-CEoMSrD7oG7BJdG-rA6I9S1DGdac-9IbUAJA0FtAZm4uDM67jhhax-MLS9my"/>
+<span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-accent-red ring-2 ring-white dark:ring-background-dark" style="background-color: #ff3b30"></span>
+</div>
+<div class="flex flex-col justify-center flex-1 overflow-hidden">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal truncate">Google Calendar</p>
+<p class="text-gray-900 dark:text-white text-sm font-normal leading-normal truncate">Lời mời: Họp nhóm hàng tuần @ 10:00 Thứ Tư</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">Bạn được mời tham gia sự kiện sau. Vui lòng xác nhận tham gia...</p>
+</div>
+</div>
+<div class="shrink-0 flex flex-col items-end gap-1">
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">10:30 AM</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-4 w-full">
+<div class="relative">
+<img class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12" data-alt="John Doe avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeIqCVa-NxFLVrZB8VEn3uCLesGHdXZxk8S5vFSKjkq4QSNzXjaMwtfqjRPZSuzMXIyKYpW79G1gzcGsL-8DB9u3wRdCN79GmY51ii1DGL7zdHMYVawUrpSB7lTm3_gFRZARReXKdsuUvukBHyptZcPwlg_yHmDsDC88BuAg-J9eRyuKTAf-vv7zc9zwCkX2MtZ0yL0iFCfiz_0p252q21Rjnr8GcUi4bOhvg_ukuQoucClypprUDBWXFQrb-hDQnGM-zMXZheRahn"/>
+<span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-accent-red ring-2 ring-white dark:ring-background-dark" style="background-color: #ff3b30"></span>
+</div>
+<div class="flex flex-col justify-center flex-1 overflow-hidden">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal truncate">John Doe</p>
+<p class="text-gray-900 dark:text-white text-sm font-normal leading-normal truncate">Re: Project Update</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">Sounds good, I'll review the document and get back to you shortly.</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Hôm qua</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-4 w-full">
+<img class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12" data-alt="Figma avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBPFbee4aN7A9w9dAAH__AK00eXBJXIDsiiBKP8Fv4TUmPFlf1VJnX07lAYAO7M8qnCXYmfLvC7duJAJvdJW08MEXAPgH6nFmMH2OxhWgHzwDz4e1QFHFzq8iWyjvJcYV2XzVhJh7XwfpX6sAHWyaXODh6EqGc-i12bg7q7_9i9xKyIGnp7h1Ul7FwJXgQHCvIBoWnJEledP2J0XwlJpgBozQqDiUTdl1X6g-Q7ns6r1c_hBGhM3k76ZBQgk7oN5YshVNcsuGEc9qJ"/>
+<div class="flex flex-col justify-center flex-1 overflow-hidden">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal truncate">Figma</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">Your weekly Figma update</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">See what's new in the world of Figma and design systems.</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Hôm qua</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-4 w-full">
+<img class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12" data-alt="Slack avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgED0jsFDNkqHm0FbKO-Wd0LcyptNCME31CARRDj-gEqODwXn-m8dnAM9euYRLsABDMaB_MA0qqhRtvsN8o7F14BB6dEfKkPw5wZmw1xlD963Rjd0Jc_2vEBOFlkFs5uXcjCAJF515z0RDWzH6buvbbOuwSwF0eUN_LytxK3QA-cwsneMZ0y2I7HhWNuw8_gVriWM3K5W-sXwbs-COfXVbqQNfaFHoXJxtBrCHjwLDKVDiMapiRmY6FQ_k9b8bZiRtLIL6owBtkZSI"/>
+<div class="flex flex-col justify-center flex-1 overflow-hidden">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal truncate">Slack</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">You have a new notification</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">Jane mentioned you in #design channel.</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Thứ 2</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-white dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-4 w-full">
+<div class="relative">
+<div class="flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full h-12 w-12">
+<span class="text-xl font-bold text-gray-600 dark:text-gray-300">A</span>
+</div>
+<span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-accent-red ring-2 ring-white dark:ring-background-dark" style="background-color: #ff3b30"></span>
+</div>
+<div class="flex flex-col justify-center flex-1 overflow-hidden">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal truncate">Alice</p>
+<p class="text-gray-900 dark:text-white text-sm font-normal leading-normal truncate">Quick question</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">Are you free for a quick call sometime this afternoon?</p>
+</div>
+</div>
+<div class="shrink-0">
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Thứ 2</p>
+</div>
+</div>
+</div>
+<div class="fixed bottom-6 right-6 z-20">
+<button class="flex items-center justify-center rounded-full bg-primary h-14 w-14 text-white shadow-lg">
+<span class="material-symbols-outlined text-3xl">edit</span>
+</button>
+</div>
+<div class="fixed bottom-0 left-0 right-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 z-10">
+<div class="flex justify-around items-center h-16">
+<a class="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary w-full" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="text-xs font-medium">Deadline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary w-full" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="text-xs font-medium">Email</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary w-full" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-xs font-medium">Cài đặt</span>
+</a>
+</div>
+</div>
+</div>
+
+</body></html>

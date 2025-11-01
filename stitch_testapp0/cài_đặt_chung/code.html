@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cài đặt chung</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#137fec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+            "text-light": "#111418",
+            "text-dark": "#EAEAEA",
+            "card-light": "#FFFFFF",
+            "card-dark": "#1C2533",
+            "border-light": "#f0f2f4",
+            "border-dark": "#333d4b",
+          },
+          fontFamily: {
+            "display": ["Roboto", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex items-center bg-card-light dark:bg-card-dark p-4 pb-3 justify-between sticky top-0 z-10 border-b border-border-light dark:border-border-dark">
+<div class="text-text-light dark:text-text-dark flex size-12 shrink-0 items-center justify-center">
+</div>
+<h1 class="text-text-light dark:text-text-dark text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Cài đặt</h1>
+<div class="flex size-12 shrink-0 items-center justify-center">
+</div>
+</div>
+<div class="flex flex-col gap-4 p-4">
+<div class="flex p-4 @container bg-card-light dark:bg-card-dark rounded-xl">
+<div class="flex w-full flex-col gap-4 @[520px]:flex-row @[520px]:justify-between @[520px]:items-center">
+<div class="flex gap-4 items-center">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-20 w-20" data-alt="User avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCddvulQn9LaSgFXs3-ZJVU9IWQFVIy_kktyeEi1OVi9vsL94mKy0NgTW_IkDH7p4rD4j6tOLLdSpdwNUrmhWPuXN8jYRugQ_kVqxdRC0szCHyxA5CSaeJMhxa-PkjGtnkRWzRMJ_OQjIJMit0irarDczJqnro9TqWnpVj-80oFDPOPC6VLbYuRPaz272rpqnZVzt5PvABXmYK_tKgL_2pmO7DVYqcvR7f9M8zwNe3W2wMLyz_eWaywoDgX5zk3jci-ML64I2Qlnep3");'></div>
+<button class="absolute bottom-0 right-0 flex items-center justify-center size-7 bg-primary rounded-full text-white">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em]">Tên hiển thị</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">email@example.com</p>
+</div>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-border-light dark:bg-border-dark text-text-light dark:text-text-dark text-sm font-bold leading-normal tracking-[0.015em] w-full @[520px]:w-auto">
+<span class="truncate">Chỉnh sửa</span>
+</button>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl overflow-hidden">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Thông báo đẩy</h3>
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-border-light dark:bg-border-dark shrink-0 size-10">
+<span class="material-symbols-outlined">notifications_active</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Thông báo đẩy</p>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-border-light dark:bg-border-dark p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary">
+<div class="h-full w-[27px] rounded-full bg-white transition-transform" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-border-light dark:bg-border-dark shrink-0 size-10">
+<span class="material-symbols-outlined">volume_up</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Âm thanh thông báo</p>
+</div>
+<div class="shrink-0">
+<select class="rounded-lg border-none bg-border-light dark:bg-border-dark text-text-light dark:text-text-dark text-sm font-medium focus:ring-primary focus:border-primary">
+<option>Mặc định</option>
+<option>Reng reng</option>
+<option>Ting Ting</option>
+<option>Im lặng</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-border-light dark:bg-border-dark shrink-0 size-10">
+<span class="material-symbols-outlined">ad_units</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Kiểu hiển thị</p>
+</div>
+<div class="shrink-0">
+<select class="rounded-lg border-none bg-border-light dark:bg-border-dark text-text-light dark:text-text-dark text-sm font-medium focus:ring-primary focus:border-primary">
+<option>Banner</option>
+<option>Popup</option>
+<option>Biểu ngữ</option>
+</select>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl overflow-hidden">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Email &amp; Nhắc nhở</h3>
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-border-light dark:bg-border-dark shrink-0 size-10">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Thông báo qua email</p>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-border-light dark:bg-border-dark p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary">
+<div class="h-full w-[27px] rounded-full bg-white transition-transform" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+<input class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-border-light dark:bg-border-dark shrink-0 size-10">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Nhắc nhở mặc định</p>
+</div>
+<div class="shrink-0">
+<select class="rounded-lg border-none bg-border-light dark:bg-border-dark text-text-light dark:text-text-dark text-sm font-medium focus:ring-primary focus:border-primary">
+<option>1 giờ trước</option>
+<option>2 giờ trước</option>
+<option>1 ngày trước</option>
+<option>2 ngày trước</option>
+</select>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl overflow-hidden">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Giao diện</h3>
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-border-light dark:bg-border-dark shrink-0 size-10">
+<span class="material-symbols-outlined">brightness_medium</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Chế độ hiển thị</p>
+</div>
+<div class="shrink-0">
+<div class="flex items-center gap-1 rounded-lg bg-border-light dark:bg-border-dark p-1">
+<button class="px-3 py-1 text-sm font-semibold text-text-light dark:text-text-dark rounded-md bg-card-light dark:bg-card-dark">Sáng</button>
+<button class="px-3 py-1 text-sm font-semibold text-gray-500 dark:text-gray-400 rounded-md">Tối</button>
+<button class="px-3 py-1 text-sm font-semibold text-gray-500 dark:text-gray-400 rounded-md">Tự động</button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl overflow-hidden">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Bảo mật &amp; Quản lý</h3>
+<button class="w-full flex items-center gap-4 px-4 min-h-14 justify-between hover:bg-gray-50 dark:hover:bg-gray-800/50">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-border-light dark:bg-border-dark shrink-0 size-10">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Đổi mật khẩu</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_right</span>
+</button>
+<button class="w-full flex items-center gap-4 px-4 min-h-14 justify-between hover:bg-gray-50 dark:hover:bg-gray-800/50">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-border-light dark:bg-border-dark shrink-0 size-10">
+<span class="material-symbols-outlined">logout</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Đăng xuất</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_right</span>
+</button>
+<button class="w-full flex items-center gap-4 px-4 min-h-14 justify-between hover:bg-red-50 dark:hover:bg-red-900/20">
+<div class="flex items-center gap-4">
+<div class="text-red-500 flex items-center justify-center rounded-lg bg-red-100 dark:bg-red-900/30 shrink-0 size-10">
+<span class="material-symbols-outlined">delete</span>
+</div>
+<p class="text-red-500 text-base font-normal leading-normal flex-1 truncate">Xóa tài khoản</p>
+</div>
+<span class="material-symbols-outlined text-red-500">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

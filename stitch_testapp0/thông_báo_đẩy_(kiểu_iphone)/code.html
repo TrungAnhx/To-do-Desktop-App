@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thông báo Deadline</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#137fec",
+          },
+          fontFamily: {
+            "display": ["'SF Pro Display'", "sans-serif"]
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1554141311-6a4a30b704c7?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      min-height: max(884px, 100dvh);
+    }
+    .notification-shadow {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-black/20 backdrop-blur-md">
+<div class="relative flex h-screen w-full flex-col items-center justify-start pt-20">
+<div class="w-[370px] max-w-sm mx-auto">
+<div class="flex flex-col gap-1 rounded-[22px] bg-white/70 dark:bg-neutral-800/70 backdrop-blur-2xl notification-shadow overflow-hidden">
+<div class="px-4 pt-3.5 pb-3">
+<div class="flex items-center justify-between mb-0.5">
+<div class="flex items-center gap-2">
+<div class="flex items-center justify-center rounded-md bg-white text-primary shrink-0 size-5 text-sm font-bold shadow-sm">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</div>
+<p class="text-black/90 dark:text-white/90 text-[15px] font-normal leading-tight">DeadlineMaster</p>
+</div>
+<p class="text-black/60 dark:text-white/60 text-[15px] font-normal leading-tight shrink-0">bây giờ</p>
+</div>
+<div class="flex flex-col">
+<p class="text-black dark:text-white text-[16px] font-semibold leading-tight">Sắp đến hạn: Báo cáo tuần</p>
+<p class="text-black dark:text-white text-[16px] font-normal leading-tight mt-0.5">Hoàn thành báo cáo tiến độ công việc trước 5 giờ chiều hôm nay.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

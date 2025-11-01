@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Email Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "text-light": "#111418",
+                        "text-dark": "#f6f7f8",
+                        "subtext-light": "#617589",
+                        "subtext-dark": "#a0b0c0",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-200 dark:border-gray-700">
+<button class="flex items-center justify-center h-10 w-10 text-text-light dark:text-text-dark">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h2 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Email Detail</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex items-center justify-center h-10 w-10 text-text-light dark:text-text-dark">
+<span class="material-symbols-outlined text-2xl">more_vert</span>
+</button>
+</div>
+</div>
+<div class="px-4 pt-6 pb-3">
+<h1 class="text-text-light dark:text-text-dark tracking-light text-2xl font-bold leading-tight">Báo cáo tiến độ dự án X - Tuần 2</h1>
+</div>
+<div class="flex items-center gap-4 bg-transparent px-4 py-2 justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12" data-alt="Avatar of Nguyen Van A" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuASoyOnKQFcB4-Bf_wJo1DcUwO4xrM4Cg4Yvaf45IDGCEjYP7HZQF9-mvAxnPKV7JVSp_UhtZL5T8GDk6HYjy18Eeqq6ZzDTeS0lTKOXcNH_cyjLZ9TRn14kBzlKUzuHuuRYpUoPtAIoEUU84L-aKjyJ8ZdL66_8HmSDUE8NWc_6IUkLv4CEnPrMI93EJ7JoIPPoWMG8yex_RbbntUbNoIbaW6w9trBRBUWyqG40GqE3aT-BNsxtFjB-D_Ox-oaha8ZrqHX3aBEvV7b");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal line-clamp-1">Nguyễn Văn A</p>
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal line-clamp-2">a.nguyen@company.com</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center gap-2">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal">10:30 AM</p>
+<button class="text-subtext-light dark:text-subtext-dark">
+<span class="material-symbols-outlined text-xl">star_outline</span>
+</button>
+</div>
+</div>
+<div class="px-4 py-2">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal">Tới: Bạn, Trần Thị B &lt;b.tran@company.com&gt;</p>
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal">Ngày: Thứ Hai, 28/10/2024</p>
+</div>
+<div class="px-4 py-4">
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-relaxed">
+                Hi team,
+                <br/><br/>
+                Please find attached the progress report for Project X for the second week. We have made significant progress in the development phase and are on track to meet our deadlines.
+                <br/><br/>
+                The key highlights for this week are:
+                </p><ul class="list-disc list-inside ml-4 my-2">
+<li>Completed the user authentication module.</li>
+<li>Designed the database schema.</li>
+<li>Started working on the API integration.</li>
+</ul>
+                Please review the attached report and provide your feedback by end of day tomorrow.
+                <br/><br/>
+                Thanks,
+                <br/>
+                Nguyen Van A
+            <p></p>
+</div>
+<div class="px-4 py-2">
+<h3 class="text-text-light dark:text-text-dark text-base font-semibold mb-2">Tệp đính kèm</h3>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 rounded-lg p-3 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 shrink-0 size-10">
+<span class="material-symbols-outlined">description</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">BaoCaoTuan2.pdf</p>
+</div>
+<div class="shrink-0">
+<button class="text-text-light dark:text-text-dark flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 rounded-lg p-3 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 shrink-0 size-10">
+<span class="material-symbols-outlined">image</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">HinhAnh.jpg</p>
+</div>
+<div class="shrink-0">
+<button class="text-text-light dark:text-text-dark flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="sticky bottom-0 bg-background-light dark:bg-background-dark p-4 mt-auto border-t border-gray-200 dark:border-gray-700">
+<div class="flex items-center justify-around">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-2xl">reply</span>
+<span class="text-xs font-medium">Trả lời</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-subtext-light dark:text-subtext-dark">
+<span class="material-symbols-outlined text-2xl">forward</span>
+<span class="text-xs font-medium">Chuyển tiếp</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-subtext-light dark:text-subtext-dark">
+<span class="material-symbols-outlined text-2xl">delete</span>
+<span class="text-xs font-medium">Xóa</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-subtext-light dark:text-subtext-dark">
+<span class="material-symbols-outlined text-2xl">star</span>
+<span class="text-xs font-medium">Quan trọng</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

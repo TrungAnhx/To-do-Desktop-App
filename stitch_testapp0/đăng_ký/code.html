@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đăng ký tài khoản</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen flex-col items-center justify-center bg-background-light dark:bg-background-dark p-4 group/design-root overflow-x-hidden">
+<div class="w-full max-w-md bg-white dark:bg-background-dark rounded-xl shadow-lg p-8">
+<div class="text-center mb-6">
+<h1 class="text-3xl font-bold text-[#111418] dark:text-white tracking-tight">Tạo tài khoản mới</h1>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col">
+<label class="text-base font-medium text-[#111418] dark:text-gray-300 pb-2" for="email">Email</label>
+<div class="relative flex w-full items-center">
+<input class="form-input flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-gray-800 h-14 placeholder:text-[#617589] p-4 text-base font-normal leading-normal pr-12" id="email" placeholder="Nhập email của bạn" type="email"/>
+<span class="material-symbols-outlined absolute right-4 text-[#617589] dark:text-gray-400">mail</span>
+</div>
+</div>
+<div class="flex flex-col">
+<label class="text-base font-medium text-[#111418] dark:text-gray-300 pb-2" for="username">Tên người dùng</label>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-gray-800 h-14 placeholder:text-[#617589] p-4 text-base font-normal leading-normal" id="username" placeholder="Tên người dùng"/>
+</div>
+<div class="flex flex-col">
+<label class="text-base font-medium text-[#111418] dark:text-gray-300 pb-2" for="password">Mật khẩu</label>
+<div class="relative flex w-full items-center">
+<input class="form-input flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-gray-800 h-14 placeholder:text-[#617589] p-4 text-base font-normal leading-normal pr-12" id="password" placeholder="Mật khẩu" type="password"/>
+<span class="material-symbols-outlined absolute right-4 text-[#617589] dark:text-gray-400 cursor-pointer">visibility_off</span>
+</div>
+</div>
+<div class="flex flex-col">
+<label class="text-base font-medium text-[#111418] dark:text-gray-300 pb-2" for="confirm-password">Xác nhận lại mật khẩu</label>
+<div class="relative flex w-full items-center">
+<input class="form-input flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-gray-800 h-14 placeholder:text-[#617589] p-4 text-base font-normal leading-normal pr-12" id="confirm-password" placeholder="Xác nhận lại mật khẩu" type="password"/>
+<span class="material-symbols-outlined absolute right-4 text-[#617589] dark:text-gray-400 cursor-pointer">visibility_off</span>
+</div>
+</div>
+</div>
+<button class="mt-6 w-full bg-primary text-white font-semibold py-4 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-background-dark transition duration-150 ease-in-out">
+            Đăng ký
+        </button>
+<p class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+            Bằng việc đăng ký, bạn đồng ý với
+            <a class="font-medium text-primary hover:underline" href="#">Điều khoản dịch vụ</a> và
+            <a class="font-medium text-primary hover:underline" href="#">Chính sách bảo mật</a>
+            của chúng tôi.
+        </p>
+<div class="mt-4 text-center">
+<p class="text-sm text-gray-500 dark:text-gray-400">
+                Đã có tài khoản?
+                <a class="font-medium text-primary hover:underline" href="#">Đăng nhập ngay</a>
+</p>
+</div>
+</div>
+</div>
+</body></html>

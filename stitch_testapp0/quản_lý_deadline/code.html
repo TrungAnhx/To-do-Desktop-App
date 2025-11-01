@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deadline Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#007BFF",
+            "background-light": "#F5F5F5",
+            "background-dark": "#101922",
+            "success": "#28a745",
+            "warning": "#FFC107",
+            "danger": "#DC3545",
+            "completed": "#6c757d"
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="sticky top-0 z-10 bg-white dark:bg-background-dark/80 backdrop-blur-sm">
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined text-primary text-3xl">task_alt</span>
+</div>
+<h1 class="text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Deadline của bạn</h1>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-transparent text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</div>
+<div class="px-4 py-3">
+<div class="flex h-10 flex-1 items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-800 has-[:checked]:shadow-sm has-[:checked]:text-primary text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal">
+<span class="truncate">Hôm nay</span>
+<input class="invisible w-0" name="date-filter" type="radio" value="Hôm nay"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-800 has-[:checked]:shadow-sm has-[:checked]:text-primary text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal">
+<span class="truncate">Tuần này</span>
+<input checked="" class="invisible w-0" name="date-filter" type="radio" value="Tuần này"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-800 has-[:checked]:shadow-sm has-[:checked]:text-primary text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal">
+<span class="truncate">Tháng này</span>
+<input class="invisible w-0" name="date-filter" type="radio" value="Tháng này"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-800 has-[:checked]:shadow-sm has-[:checked]:text-primary text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal">
+<span class="truncate">Tất cả</span>
+<input class="invisible w-0" name="date-filter" type="radio" value="Tất cả"/>
+</label>
+</div>
+</div>
+</header>
+<main class="flex-1 px-4 py-2 space-y-4">
+<!-- Deadline Item 1 -->
+<div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-success"></div>
+<div class="flex gap-4 p-4 justify-between items-center">
+<div class="flex flex-1 flex-col justify-center pl-2">
+<div class="flex items-center gap-2">
+<p class="text-gray-900 dark:text-white text-base font-bold leading-normal">Nộp báo cáo giữa kỳ</p>
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-sm">mail</span>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Môn Phân tích thiết kế hệ thống</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mt-1">Hết hạn: 25/12/2024</p>
+</div>
+<div class="flex flex-col items-end gap-2">
+<p class="text-success text-sm font-semibold">Còn 2 ngày</p>
+<div class="flex gap-2 text-gray-500 dark:text-gray-400">
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Deadline Item 2 -->
+<div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-warning"></div>
+<div class="flex gap-4 p-4 justify-between items-center">
+<div class="flex flex-1 flex-col justify-center pl-2">
+<p class="text-gray-900 dark:text-white text-base font-bold leading-normal">Làm bài tập về nhà</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Môn Toán cao cấp</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mt-1">Hết hạn: 23/12/2024</p>
+</div>
+<div class="flex flex-col items-end gap-2">
+<p class="text-warning text-sm font-semibold">Hết hạn trong 3 giờ</p>
+<div class="flex gap-2 text-gray-500 dark:text-gray-400">
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Deadline Item 3 -->
+<div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-danger"></div>
+<div class="flex gap-4 p-4 justify-between items-center">
+<div class="flex flex-1 flex-col justify-center pl-2">
+<p class="text-gray-900 dark:text-white text-base font-bold leading-normal">Hoàn thành project</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Môn Lập trình ứng dụng di động</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mt-1">Hết hạn: 20/12/2024</p>
+</div>
+<div class="flex flex-col items-end gap-2">
+<p class="text-danger text-sm font-semibold">Đã quá hạn</p>
+<div class="flex gap-2 text-gray-500 dark:text-gray-400">
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Deadline Item 4 - Completed -->
+<div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden opacity-60">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-completed"></div>
+<div class="flex gap-4 p-4 justify-between items-center">
+<div class="flex flex-1 flex-col justify-center pl-2">
+<p class="text-gray-900 dark:text-white text-base font-bold leading-normal line-through">Thiết kế wireframe</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-through">Dự án cá nhân</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mt-1">Hoàn thành: 19/12/2024</p>
+</div>
+<div class="flex flex-col items-end gap-2">
+<p class="text-completed text-sm font-semibold">Đã hoàn thành</p>
+<div class="flex gap-2 text-gray-500 dark:text-gray-400">
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg text-success">task_alt</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- No Deadlines Message -->
+<div class="text-center py-16 hidden">
+<span class="material-symbols-outlined text-6xl text-gray-400 dark:text-gray-500">celebration</span>
+<h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-white">Tuyệt vời!</h3>
+<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Bạn không có deadline nào.</p>
+</div>
+</main>
+<div class="fixed bottom-6 right-6">
+<button class="flex items-center justify-center w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-transform transform active:scale-95">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</div>
+</body></html>

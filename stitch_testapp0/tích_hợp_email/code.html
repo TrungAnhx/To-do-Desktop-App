@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Email Integration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#137fec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between">
+<div class="flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined text-gray-800 dark:text-gray-200">arrow_back</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center text-gray-800 dark:text-gray-200">Email Integration</h2>
+<div class="flex w-12 items-center justify-end"></div>
+</div>
+<div class="p-4 pt-2">
+<p class="text-gray-800 dark:text-gray-200 text-base font-normal leading-normal pb-3 pt-1">Connect your email to automatically create tasks from important messages.</p>
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm mb-4">
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14" data-alt="Gmail logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxKOuY8YY63r-TV2FQVz3BBW0VsgRZxuhOcFlU8jnFp-o53t8adM5glnURcBrW-cC5A9wP0SL0tEs37v1UPm8GGR2H2UaalZfUI5lvpoJW7rSaK_bK2pA7Yv5JdsV9raHOJAyGEbG1EQzLcu2jhb5ojr0WsFL6bCs7QZDMfNWyvQNGYr_rZIYe7tZ5o6U359ZiSGgTDv1GdqWfDn2q_aNMPtFHus_o-DIynOn2cuYlt6_BoEaYts7JTcu1z0WKWSfpeCVMjvKqxFfT");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal line-clamp-1">Gmail</p>
+<p class="text-green-500 text-sm font-normal leading-normal line-clamp-2">Connected as user@gmail.com</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-primary p-0.5 has-[:checked]:justify-end">
+<div class="h-full w-[27px] rounded-full bg-white" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-700">
+<button class="w-full text-left px-4 py-3 text-primary font-medium text-sm">Sync Settings</button>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+<div class="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14" data-alt="Microsoft Outlook logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD03D-pjxW-TGlexrzNg-ul-XNHPvonwyU6Hv2JVYbZXMbLF3N0ure-LC0hG81f5cKqh5efQsOf22q8hOdNKrcTkK8YPgQZ6dYHoDwgu44Ww4RIezTAYhwR6Xtnzna1iah0vkIB5GTo2GZGSi4xm7wNRonzBAoy9TTaO-B9e1Yu5FC9lptO49xpNHNed5vKv0aXXkimbOC9i8qI29iOQthYXB5fL9snAU1qKmPkZuEKBcK_-jElYHoayNpDw7TmCWq5J381ncCrec4_");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-gray-900 dark:text-white text-base font-medium leading-normal line-clamp-1">Microsoft Outlook</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Not Connected</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-gray-200 dark:bg-gray-700 p-0.5 has-[:checked]:bg-primary">
+<div class="h-full w-[27px] rounded-full bg-white dark:bg-gray-300" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+<input class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-grow"></div>
+<div class="sticky bottom-0 bg-background-light dark:bg-background-dark w-full px-4 py-3">
+<button class="flex w-full min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] mx-auto">
+<span class="truncate">Save Changes</span>
+</button>
+</div>
+</div>
+</body></html>
