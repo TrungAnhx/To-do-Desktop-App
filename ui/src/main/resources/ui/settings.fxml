@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.todo.desktop.ui.controller.SettingsController" 
+            style="-fx-background-color: transparent;"
+            stylesheets="@styles.css"
+            styleClass="scroll-pane">
+    <content>
+        <VBox spacing="24" alignment="TOP_LEFT">
+            <padding>
+                <Insets top="24" right="24" bottom="24" left="24"/>
+            </padding>
+            <VBox spacing="18" style="-fx-background-color: rgba(15,23,42,0.72); -fx-background-radius: 24; -fx-padding: 24;">
+                <Label text="Tài khoản" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: 700;"/>
+                <HBox spacing="18" alignment="CENTER_LEFT">
+                    <StackPane prefWidth="76" prefHeight="76" style="-fx-background-color: rgba(59,130,246,0.35); -fx-background-radius: 26;">
+                        <Label fx:id="accountAvatarLabel" text="A" style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: 700;"/>
+                    </StackPane>
+                    <VBox spacing="6" alignment="CENTER_LEFT">
+                        <Label fx:id="accountNameLabel" text="Tên hiển thị" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: 600;"/>
+                        <Label fx:id="accountEmailLabel" text="email@example.com" style="-fx-text-fill: rgba(226,232,240,0.75); -fx-font-size: 14px;"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Chỉnh sửa" style="-fx-background-radius: 12; -fx-background-color: rgba(148,163,184,0.2); -fx-text-fill: white; -fx-font-weight: 600; -fx-padding: 10 20;"/>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="16" style="-fx-background-color: rgba(15,23,42,0.72); -fx-background-radius: 24; -fx-padding: 24;">
+                <Label text="Thông báo" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: 700;"/>
+                <HBox alignment="CENTER_LEFT" spacing="16">
+                    <CheckBox fx:id="desktopNotificationToggle" text="Bật thông báo trên desktop" style="-fx-text-fill: rgba(226,232,240,0.9); -fx-font-size: 14px;"/>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="16">
+                    <CheckBox text="Gửi email nhắc việc" style="-fx-text-fill: rgba(226,232,240,0.9); -fx-font-size: 14px;"/>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="16" style="-fx-background-color: rgba(15,23,42,0.72); -fx-background-radius: 24; -fx-padding: 24;">
+                <Label text="Giao diện" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: 700;"/>
+                <CheckBox fx:id="darkModeToggle" text="Luôn sử dụng chế độ tối" selected="true" style="-fx-text-fill: rgba(226,232,240,0.9); -fx-font-size: 14px;"/>
+                <Label text="Mẹo: dùng hệ thống để tự động chuyển theo giờ" style="-fx-text-fill: rgba(148,163,184,0.75); -fx-font-size: 12px;"/>
+            </VBox>
+
+            <VBox spacing="16" style="-fx-background-color: rgba(15,23,42,0.72); -fx-background-radius: 24; -fx-padding: 24;">
+                <Label text="Tích hợp Outlook" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: 700;"/>
+                <Label text="Kết nối tài khoản Outlook của bạn để đồng bộ email và gửi thư từ ứng dụng." wrapText="true" style="-fx-text-fill: rgba(226,232,240,0.7); -fx-font-size: 14px;"/>
+                <Label fx:id="outlookStatusLabel" text="Chưa kết nối" style="-fx-text-fill: rgba(148,163,184,0.75); -fx-font-size: 13px;"/>
+                <Label fx:id="outlookMessageLabel" text="" wrapText="true" style="-fx-text-fill: rgba(226,232,240,0.8); -fx-font-size: 12px;"/>
+                <HBox spacing="16" alignment="CENTER_LEFT">
+                    <Button fx:id="connectOutlookButton" text="Kết nối Outlook" onAction="#onConnectOutlook" style="-fx-background-color: linear-gradient(to right, #2563eb, #1d4ed8); -fx-text-fill: white; -fx-font-weight: 600; -fx-background-radius: 12; -fx-padding: 10 22;"/>
+                    <Button fx:id="disconnectOutlookButton" text="Ngắt kết nối" onAction="#onDisconnectOutlook" visible="false" managed="false" style="-fx-background-color: rgba(248,113,113,0.25); -fx-text-fill: #fca5a5; -fx-font-weight: 600; -fx-background-radius: 12; -fx-padding: 10 22;"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </content>
+</ScrollPane>

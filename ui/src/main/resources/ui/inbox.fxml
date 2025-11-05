@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.todo.desktop.ui.controller.InboxController"
+           stylesheets="@styles.css">
+    <!-- Main Inbox View -->
+    <VBox fx:id="inboxMainView" spacing="24" style="-fx-background-color: transparent;">
+        <HBox alignment="CENTER_LEFT" spacing="14">
+            <Button fx:id="refreshButton" text="🔄 Làm mới" onAction="#onRefresh" styleClass="button-secondary"
+                    style="-fx-padding: 10 20;"/>
+            <ToggleButton fx:id="unreadToggle" text="📧 Chưa đọc" styleClass="toggle-button"/>
+            <ToggleButton fx:id="attachmentToggle" text="📎 Có tệp" styleClass="toggle-button"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="composeButton" text="✉ Soạn email" onAction="#onCompose" styleClass="button-success"/>
+        </HBox>
+        <ListView fx:id="messageList" VBox.vgrow="ALWAYS" styleClass="list-view"/>
+    </VBox>
+    
+    <!-- Compose Email Overlay -->
+    <VBox fx:id="composeEmailView" spacing="24" visible="false" managed="false" 
+          styleClass="card-glass"
+          style="-fx-background-color: rgba(15,23,42,0.98); -fx-padding: 32; -fx-max-width: 800;">
+        
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="16">
+            <Label text="✉ Soạn email mới" styleClass="label-title" style="-fx-font-size: 22px;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="closeComposeButton" text="✕" onAction="#onCloseCompose" 
+                    style="-fx-background-color: rgba(148,163,184,0.2); -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 20; -fx-padding: 8 14; -fx-cursor: hand;"/>
+        </HBox>
+        
+        <!-- Form Fields -->
+        <VBox spacing="16">
+            <VBox spacing="8">
+                <Label text="Người nhận" styleClass="label-subtitle" style="-fx-font-size: 13px; -fx-font-weight: 600;"/>
+                <TextField fx:id="composeToField" promptText="email@example.com" styleClass="text-field"/>
+            </VBox>
+            
+            <VBox spacing="8">
+                <Label text="Tiêu đề" styleClass="label-subtitle" style="-fx-font-size: 13px; -fx-font-weight: 600;"/>
+                <TextField fx:id="composeSubjectField" promptText="Nhập tiêu đề email..." styleClass="text-field"/>
+            </VBox>
+            
+            <VBox spacing="8">
+                <Label text="Nội dung" styleClass="label-subtitle" style="-fx-font-size: 13px; -fx-font-weight: 600;"/>
+                <TextArea fx:id="composeBodyField" promptText="Viết nội dung email của bạn..." 
+                          prefRowCount="10" wrapText="true" styleClass="text-area"/>
+            </VBox>
+        </VBox>
+        
+        <!-- Attachments -->
+        <VBox spacing="12">
+            <HBox spacing="14" alignment="CENTER_LEFT">
+                <Button fx:id="attachFilesButton" text="📎 Đính kèm file" onAction="#onAttachFiles" 
+                        styleClass="button-secondary" style="-fx-padding: 10 20;"/>
+                <Label fx:id="attachmentCountLabel" text="" styleClass="label-caption"/>
+            </HBox>
+            <VBox fx:id="attachmentListBox" spacing="8" visible="false" managed="false"/>
+        </VBox>
+        
+        <!-- Status -->
+        <Label fx:id="composeStatusLabel" text="" styleClass="label-subtitle"/>
+        
+        <!-- Actions -->
+        <HBox spacing="16">
+            <Button fx:id="sendEmailButton" text="✉ Gửi email" onAction="#onSendComposedEmail" 
+                    styleClass="button-primary" style="-fx-padding: 14 32; -fx-font-size: 15px;"/>
+            <Button text="Hủy" onAction="#onCloseCompose" styleClass="button-secondary"/>
+        </HBox>
+        
+    </VBox>
+</StackPane>

@@ -1,0 +1,335 @@
+/* ==================== MODERN TODO DESKTOP STYLES ==================== */
+
+/* Root Color Scheme */
+.root {
+    -fx-primary: #3b82f6;
+    -fx-primary-dark: #2563eb;
+    -fx-primary-light: #60a5fa;
+    -fx-secondary: #8b5cf6;
+    -fx-success: #10b981;
+    -fx-warning: #f59e0b;
+    -fx-danger: #ef4444;
+    -fx-text-primary: #f8fafc;
+    -fx-text-secondary: #cbd5e1;
+    -fx-text-tertiary: #94a3b8;
+    -fx-bg-card: rgba(30, 41, 59, 0.5);
+    -fx-bg-hover: rgba(59, 130, 246, 0.1);
+}
+
+/* ==================== SCROLL BARS ==================== */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(148, 163, 184, 0.3);
+    -fx-background-radius: 8px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(148, 163, 184, 0.5);
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+/* ==================== BUTTONS ==================== */
+.button {
+    -fx-cursor: hand;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+}
+
+.button:hover {
+    -fx-opacity: 0.9;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.button:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+.button-primary {
+    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
+    -fx-text-fill: white;
+    -fx-font-weight: 600;
+    -fx-background-radius: 12px;
+    -fx-padding: 12 24;
+    -fx-font-size: 14px;
+}
+
+.button-secondary {
+    -fx-background-color: rgba(148, 163, 184, 0.2);
+    -fx-text-fill: rgba(226, 232, 240, 0.9);
+    -fx-font-weight: 600;
+    -fx-background-radius: 12px;
+    -fx-padding: 12 24;
+}
+
+.button-danger {
+    -fx-background-color: rgba(239, 68, 68, 0.15);
+    -fx-text-fill: #f87171;
+    -fx-font-weight: 600;
+    -fx-background-radius: 12px;
+    -fx-padding: 12 24;
+}
+
+.button-success {
+    -fx-background-color: linear-gradient(to right, #10b981, #059669);
+    -fx-text-fill: white;
+    -fx-font-weight: 600;
+    -fx-background-radius: 12px;
+    -fx-padding: 12 24;
+}
+
+/* ==================== NAVIGATION TOGGLES ==================== */
+.nav-toggle {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgba(226, 232, 240, 0.7);
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+    -fx-padding: 14 32;
+    -fx-background-radius: 12px;
+    -fx-cursor: hand;
+}
+
+.nav-toggle:hover {
+    -fx-background-color: rgba(59, 130, 246, 0.15);
+    -fx-text-fill: rgba(226, 232, 240, 0.95);
+}
+
+.nav-toggle:selected,
+.nav-toggle-active {
+    -fx-background-color: linear-gradient(to right, rgba(59, 130, 246, 0.25), rgba(37, 99, 235, 0.2));
+    -fx-text-fill: #60a5fa;
+    -fx-border-color: rgba(96, 165, 250, 0.3);
+    -fx-border-width: 0 0 3 0;
+}
+
+/* ==================== TEXT FIELDS ==================== */
+.text-field,
+.password-field {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.45);
+    -fx-background-radius: 12px;
+    -fx-padding: 12 16;
+    -fx-font-size: 14px;
+    -fx-border-color: rgba(148, 163, 184, 0.2);
+    -fx-border-width: 1;
+    -fx-border-radius: 12px;
+}
+
+.text-field:focused,
+.password-field:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-border-color: rgba(59, 130, 246, 0.5);
+    -fx-border-width: 2;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.3);
+}
+
+/* Hiển thị lại prompt text khi unfocus và empty */
+.text-field:empty,
+.password-field:empty {
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.45);
+}
+
+/* Ẩn cursor (caret) trong text field khi không focus */
+.text-field:unfocused .caret,
+.password-field:unfocused .caret {
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+/* Ẩn caret bằng cách làm cho nó trong suốt */
+.text-field .text .caret,
+.password-field .text .caret {
+    -fx-stroke: transparent;
+}
+
+.text-field:focused .text .caret,
+.password-field:focused .text .caret {
+    -fx-stroke: #111827;
+    -fx-stroke-width: 1;
+}
+
+.text-area {
+    -fx-control-inner-background: rgba(255, 255, 255, 0.08);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.4);
+    -fx-background-radius: 12px;
+    -fx-border-color: rgba(148, 163, 184, 0.2);
+    -fx-border-width: 1;
+    -fx-border-radius: 12px;
+}
+
+.text-area:focused {
+    -fx-control-inner-background: rgba(255, 255, 255, 0.12);
+    -fx-border-color: rgba(59, 130, 246, 0.5);
+    -fx-border-width: 2;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
+}
+
+/* ==================== LIST VIEW ==================== */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: rgba(30, 41, 59, 0.4);
+    -fx-text-fill: white;
+    -fx-padding: 16 20;
+    -fx-background-radius: 12px;
+    -fx-background-insets: 0 0 8 0;
+}
+
+.list-cell:hover {
+    -fx-background-color: rgba(59, 130, 246, 0.12);
+    -fx-cursor: hand;
+}
+
+.list-cell:selected {
+    -fx-background-color: rgba(59, 130, 246, 0.25);
+}
+
+.list-cell:empty {
+    -fx-background-color: transparent;
+}
+
+/* ==================== CHECK BOX ==================== */
+.check-box {
+    -fx-text-fill: rgba(226, 232, 240, 0.9);
+    -fx-font-size: 14px;
+}
+
+.check-box .box {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-border-color: rgba(148, 163, 184, 0.3);
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+.check-box:selected .box {
+    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
+    -fx-border-color: transparent;
+}
+
+.check-box .mark {
+    -fx-background-color: white;
+}
+
+/* ==================== CARDS ==================== */
+.card {
+    -fx-background-color: rgba(30, 41, 59, 0.6);
+    -fx-background-radius: 16px;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0.2, 0, 4);
+}
+
+.card-glass {
+    -fx-background-color: rgba(30, 41, 59, 0.5);
+    -fx-background-radius: 20px;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 16, 0.15, 0, 6);
+    -fx-border-color: rgba(148, 163, 184, 0.1);
+    -fx-border-width: 1;
+    -fx-border-radius: 20px;
+}
+
+/* ==================== LABELS ==================== */
+.label-title {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+}
+
+.label-subtitle {
+    -fx-text-fill: rgba(226, 232, 240, 0.8);
+    -fx-font-size: 14px;
+}
+
+.label-caption {
+    -fx-text-fill: rgba(148, 163, 184, 0.8);
+    -fx-font-size: 12px;
+}
+
+/* ==================== BADGES ==================== */
+.badge {
+    -fx-background-color: rgba(59, 130, 246, 0.2);
+    -fx-text-fill: #60a5fa;
+    -fx-background-radius: 12px;
+    -fx-padding: 4 12;
+    -fx-font-size: 11px;
+    -fx-font-weight: 700;
+}
+
+.badge-success {
+    -fx-background-color: rgba(16, 185, 129, 0.2);
+    -fx-text-fill: #34d399;
+}
+
+.badge-warning {
+    -fx-background-color: rgba(245, 158, 11, 0.2);
+    -fx-text-fill: #fbbf24;
+}
+
+.badge-danger {
+    -fx-background-color: rgba(239, 68, 68, 0.2);
+    -fx-text-fill: #f87171;
+}
+
+/* ==================== SEPARATORS ==================== */
+.separator {
+    -fx-background-color: rgba(148, 163, 184, 0.2);
+}
+
+/* ==================== TOOLTIPS ==================== */
+.tooltip {
+    -fx-background-color: rgba(15, 23, 42, 0.95);
+    -fx-text-fill: white;
+    -fx-background-radius: 8px;
+    -fx-padding: 8 12;
+    -fx-font-size: 12px;
+}
+
+/* ==================== HYPERLINKS ==================== */
+.hyperlink {
+    -fx-text-fill: #60a5fa;
+    -fx-underline: false;
+    -fx-cursor: hand;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #3b82f6;
+}
+
+/* ==================== TOGGLE BUTTON ==================== */
+.toggle-button {
+    -fx-background-color: rgba(148, 163, 184, 0.15);
+    -fx-text-fill: rgba(226, 232, 240, 0.8);
+    -fx-background-radius: 12px;
+    -fx-padding: 10 18;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+}
+
+.toggle-button:selected {
+    -fx-background-color: rgba(59, 130, 246, 0.25);
+    -fx-text-fill: #60a5fa;
+}
+
+.toggle-button:hover {
+    -fx-background-color: rgba(59, 130, 246, 0.2);
+}

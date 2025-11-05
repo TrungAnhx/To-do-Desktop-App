@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.todo.desktop.ui.controller.DeadlineOverviewController" style="-fx-background-color: transparent;">
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <Button fx:id="addDeadlineButton" text="+ Deadline mới" onAction="#onAddDeadline" style="-fx-background-color: linear-gradient(to right, #2563eb, #1d4ed8); -fx-text-fill: white; -fx-font-weight: 600; -fx-background-radius: 12; -fx-padding: 10 20;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="searchField" promptText="Tìm kiếm deadline" prefWidth="240" style="-fx-background-radius: 12; -fx-background-color: rgba(15,23,42,0.6); -fx-border-color: rgba(148,163,184,0.35); -fx-border-radius: 12; -fx-text-fill: white; -fx-prompt-text-fill: rgba(148,163,184,0.8); -fx-padding: 10 14;"/>
+    </HBox>
+    <HBox spacing="10">
+        <ToggleButton text="Hôm nay" style="-fx-background-radius: 10; -fx-background-color: rgba(59,130,246,0.18); -fx-text-fill: #60a5fa; -fx-font-weight: 600; -fx-padding: 8 16;" selected="true"/>
+        <ToggleButton text="Tuần này" style="-fx-background-radius: 10; -fx-background-color: rgba(148,163,184,0.2); -fx-text-fill: rgba(226,232,240,0.85); -fx-font-weight: 600; -fx-padding: 8 16;"/>
+        <ToggleButton text="Tháng này" style="-fx-background-radius: 10; -fx-background-color: rgba(148,163,184,0.2); -fx-text-fill: rgba(226,232,240,0.85); -fx-font-weight: 600; -fx-padding: 8 16;"/>
+        <ToggleButton text="Tất cả" style="-fx-background-radius: 10; -fx-background-color: rgba(148,163,184,0.2); -fx-text-fill: rgba(226,232,240,0.85); -fx-font-weight: 600; -fx-padding: 8 16;"/>
+    </HBox>
+    <ListView fx:id="deadlineList" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;" />
+</VBox>

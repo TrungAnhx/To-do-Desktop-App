@@ -1,0 +1,10 @@
+.gradle/
+/build/
+/app-launcher/build/
+/data/build/
+/domain/build/
+/sync/build/
+/ui/build/
+
+# Firebase/Microsoft secrets
+/app-launcher/src/main/resources/application.properties
