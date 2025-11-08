@@ -93,8 +93,8 @@ public final class MainShellController {
     @FXML
     private SettingsController settingsViewController;
 
-    private static final String ACTIVE_NAV_STYLE = "-fx-background-color: linear-gradient(to right, #2563eb, #1d4ed8); -fx-text-fill: white; -fx-background-radius: 12; -fx-font-weight: 600; -fx-font-size: 14px; -fx-padding: 12 28;";
-    private static final String INACTIVE_NAV_STYLE = "-fx-background-color: transparent; -fx-text-fill: rgba(226,232,240,0.75); -fx-border-color: rgba(148,163,184,0.45); -fx-border-radius: 12; -fx-border-width: 1; -fx-font-weight: 600; -fx-font-size: 14px; -fx-padding: 12 28;";
+    private static final String ACTIVE_NAV_STYLE = "-fx-background-color: linear-gradient(135deg, #4a5568, #2d3748); -fx-text-fill: #f7fafc; -fx-background-radius: 16; -fx-font-weight: 700; -fx-font-size: 15px; -fx-padding: 14 32; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.3, 0, 2);";
+    private static final String INACTIVE_NAV_STYLE = "-fx-background-color: transparent; -fx-text-fill: #cbd5e0; -fx-background-radius: 16; -fx-border-color: #4a5568; -fx-border-width: 2; -fx-font-weight: 600; -fx-font-size: 15px; -fx-padding: 14 32; -fx-cursor: hand;";
 
     private enum Section {
         DEADLINE,
@@ -256,12 +256,12 @@ public final class MainShellController {
                     sectionSubtitleLabel.setText("Quản lý tiến độ và nhắc việc của bạn");
                 }
                 case EMAIL -> {
-                    sectionTitleLabel.setText("Hộp thư");
-                    sectionSubtitleLabel.setText("Theo dõi email quan trọng từ Outlook");
+                    sectionTitleLabel.setText("📧 Hộp thư");
+                    sectionSubtitleLabel.setText("Xem và quản lý email từ Outlook");
                 }
                 case SETTINGS -> {
-                    sectionTitleLabel.setText("Cài đặt");
-                    sectionSubtitleLabel.setText("Điều chỉnh thông báo và tài khoản của bạn");
+                    sectionTitleLabel.setText("⚙️ Cài đặt");
+                    sectionSubtitleLabel.setText("Cấu hình tài khoản và ứng dụng");
                 }
             }
         }

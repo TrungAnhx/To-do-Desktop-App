@@ -10,6 +10,7 @@ public interface OutlookService {
     CompletableFuture<Void> sendEmail(String toEmail, String subject, String body);
     CompletableFuture<Void> sendEmailWithAttachments(String toEmail, String subject, String body, List<File> attachments);
     CompletableFuture<List<EmailMessage>> getInboxMessages(int top);
+    CompletableFuture<List<EmailMessage>> getInboxMessages(int top, int skip);
     CompletableFuture<EmailMessage> getMessageById(String messageId);
     CompletableFuture<byte[]> downloadAttachment(String messageId, String attachmentId);
     boolean isConnected();

@@ -6,6 +6,7 @@ import com.todo.desktop.domain.usecase.OutlookService;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -86,6 +87,9 @@ public final class InboxController {
     private Label composeStatusLabel;
 
     private final List<File> selectedAttachments = new ArrayList<>();
+    private int currentSkip = 0;
+    private static final int PAGE_SIZE = 500;  // Increase initial load to 500
+    private boolean isLoadingMore = false;
 
     public void setEmailService(EmailService emailService) {
         this.emailService = Objects.requireNonNull(emailService);
@@ -113,6 +117,20 @@ public final class InboxController {
                 }
             }
         });
+        
+        // Auto-load more when scrolling near bottom
+        messageList.setOnScroll(event -> {
+            ScrollBar scrollBar = getVerticalScrollbar(messageList);
+            if (scrollBar != null && !isLoadingMore) {
+                double scrollPosition = scrollBar.getValue();
+                double maxScroll = scrollBar.getMax();
+                // Load more when scrolled to 90% of the list
+                if (scrollPosition >= (maxScroll * 0.9)) {
+                    loadMoreInbox();
+                }
+            }
+        });
+        
         if (unreadToggle != null) {
             unreadToggle.selectedProperty().addListener((obs, oldValue, newValue) -> applyFilters());
         }
@@ -123,12 +141,34 @@ public final class InboxController {
         refreshInboxIfReady();
     }
     
+    private ScrollBar getVerticalScrollbar(ListView<?> listView) {
+        for (var node : listView.lookupAll(".scroll-bar")) {
+            if (node instanceof ScrollBar) {
+                ScrollBar scrollBar = (ScrollBar) node;
+                if (scrollBar.getOrientation() == javafx.geometry.Orientation.VERTICAL) {
+                    return scrollBar;
+                }
+            }
+        }
+        return null;
+    }
+    
     public EmailMessage getSelectedEmail() {
         return messageList.getSelectionModel().getSelectedItem();
     }
 
     @FXML
+    private void onLoadMore() {
+        if (isLoadingMore) {
+            return;
+        }
+        // Allow manual load even if > 500 emails
+        loadMoreInbox();
+    }
+    
+    @FXML
     private void onRefresh() {
+        currentSkip = 0;
         refreshInboxIfReady();
     }
 
@@ -283,21 +323,87 @@ public final class InboxController {
             return;
         }
         
+        System.out.println("DEBUG: refreshInboxIfReady called");
+        System.out.println("DEBUG: Outlook connected: " + (outlookService != null && outlookService.isConnected()));
+        
         // Ưu tiên OutlookService nếu đã kết nối
         if (outlookService != null && outlookService.isConnected()) {
-            outlookService.getInboxMessages(50)
+            System.out.println("DEBUG: Using Outlook service");
+            isLoadingMore = true;
+            outlookService.getInboxMessages(PAGE_SIZE, currentSkip)
                     .thenAccept(messages -> Platform.runLater(() -> {
+                        System.out.println("DEBUG: Loaded " + messages.size() + " emails from Outlook");
                         inboxItems.setAll(messages);
+                        currentSkip = PAGE_SIZE;
                         applyFilters();
+                        isLoadingMore = false;
                     }))
                     .exceptionally(ex -> {
                         ex.printStackTrace();
-                        // Fallback to local email service
+                        isLoadingMore = false;
                         loadFromLocalService();
                         return null;
                     });
         } else if (emailService != null) {
+            System.out.println("DEBUG: Using local email service (Outlook not connected)");
             loadFromLocalService();
+        } else {
+            System.out.println("DEBUG: No email service available");
+        }
+    }
+    
+    private void loadMoreInboxManual() {
+        if (!initialized || isLoadingMore) {
+            return;
+        }
+        
+        if (outlookService != null && outlookService.isConnected()) {
+            isLoadingMore = true;
+            outlookService.getInboxMessages(PAGE_SIZE, currentSkip)
+                    .thenAccept(messages -> Platform.runLater(() -> {
+                        System.out.println("DEBUG: Added " + messages.size() + " more emails (manual)");
+                        inboxItems.addAll(messages);
+                        currentSkip += PAGE_SIZE;
+                        applyFilters();
+                        isLoadingMore = false;
+                    }))
+                    .exceptionally(ex -> {
+                        ex.printStackTrace();
+                        Platform.runLater(() -> {
+                            isLoadingMore = false;
+                        });
+                        return null;
+                    });
+        }
+    }
+    
+    private void loadMoreInbox() {
+        if (!initialized || isLoadingMore) {
+            return;
+        }
+        
+        // If we already have lots of emails loaded, don't auto-load more
+        if (inboxItems.size() >= 500) {
+            return;
+        }
+        
+        if (outlookService != null && outlookService.isConnected()) {
+            isLoadingMore = true;
+            outlookService.getInboxMessages(PAGE_SIZE, currentSkip)
+                    .thenAccept(messages -> Platform.runLater(() -> {
+                        System.out.println("DEBUG: Added " + messages.size() + " more emails");
+                        inboxItems.addAll(messages);
+                        currentSkip += PAGE_SIZE;
+                        applyFilters();
+                        isLoadingMore = false;
+                    }))
+                    .exceptionally(ex -> {
+                        ex.printStackTrace();
+                        Platform.runLater(() -> {
+                            isLoadingMore = false;
+                        });
+                        return null;
+                    });
         }
     }
     
@@ -340,18 +446,18 @@ public final class InboxController {
         private final Label timeLabel = new Label();
         private final HBox root = new HBox(16);
 
-        private static final String UNREAD_STYLE = "-fx-background-color: rgba(59,130,246,0.18); -fx-background-radius: 18;";
-        private static final String READ_STYLE = "-fx-background-color: rgba(15,23,42,0.65); -fx-background-radius: 18;";
-        private static final String SUBJECT_BASE_STYLE = "-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: 600;";
-        private static final String SENDER_STYLE = "-fx-text-fill: rgba(226,232,240,0.85); -fx-font-size: 13px;";
-        private static final String PREVIEW_STYLE = "-fx-text-fill: rgba(148,163,184,0.8); -fx-font-size: 12px;";
-        private static final String TIME_STYLE = "-fx-text-fill: rgba(148,163,184,0.85); -fx-font-size: 12px; -fx-font-weight: 600;";
+        private static final String UNREAD_STYLE = "-fx-background-color: rgba(49,130,206,0.15); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0.2, 0, 2);";
+        private static final String READ_STYLE = "-fx-background-color: rgba(45,55,72,0.5); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0.15, 0, 1);";
+        private static final String SUBJECT_BASE_STYLE = "-fx-text-fill: #f7fafc; -fx-font-size: 16px; -fx-font-weight: 600;";
+        private static final String SENDER_STYLE = "-fx-text-fill: #e2e8f0; -fx-font-size: 14px; -fx-font-weight: 500;";
+        private static final String PREVIEW_STYLE = "-fx-text-fill: #a0aec0; -fx-font-size: 13px;";
+        private static final String TIME_STYLE = "-fx-text-fill: #a0aec0; -fx-font-size: 12px; -fx-font-weight: 600;";
 
         private EmailCell() {
             avatarLabel.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: 600;");
-            avatarContainer.setPrefSize(48, 48);
-            avatarContainer.setMaxSize(48, 48);
-            avatarContainer.setStyle("-fx-background-color: rgba(59,130,246,0.35); -fx-background-radius: 18;");
+            avatarContainer.setPrefSize(52, 52);
+            avatarContainer.setMaxSize(52, 52);
+            avatarContainer.setStyle("-fx-background-color: linear-gradient(135deg, #3182ce, #1e40af); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.3, 0, 2);");
             avatarContainer.getChildren().add(avatarLabel);
 
             subjectLabel.setStyle(SUBJECT_BASE_STYLE);
@@ -368,7 +474,8 @@ public final class InboxController {
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
             root.setAlignment(Pos.CENTER_LEFT);
-            root.setPadding(new Insets(16));
+            root.setPadding(new Insets(18));
+            root.setStyle("-fx-cursor: hand;");
             root.getChildren().addAll(avatarContainer, textContainer, spacer, timeLabel);
 
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -389,8 +496,8 @@ public final class InboxController {
             String initial = extractInitial(item.from());
             avatarLabel.setText(initial);
             avatarContainer.setStyle(!item.isRead()
-                    ? "-fx-background-color: rgba(59,130,246,0.6); -fx-background-radius: 18;"
-                    : "-fx-background-color: rgba(94,234,212,0.32); -fx-background-radius: 18;");
+                    ? "-fx-background-color: linear-gradient(135deg, #3182ce, #1e40af); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0.3, 0, 2);"
+                    : "-fx-background-color: linear-gradient(135deg, #38a169, #2f855a); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.3, 0, 2);");
 
             root.setStyle(!item.isRead() ? UNREAD_STYLE : READ_STYLE);
             subjectLabel.setStyle(SUBJECT_BASE_STYLE + (!item.isRead() ? " -fx-font-weight: 700;" : " -fx-font-weight: 600;"));

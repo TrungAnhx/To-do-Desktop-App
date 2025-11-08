@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
+<?import java.lang.String?>
 
 <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
            fx:controller="com.todo.desktop.ui.controller.LoginController" 
@@ -34,13 +35,29 @@
                     <Label text="Chào mừng bạn trở lại!" style="-fx-text-fill: #4b5563; -fx-font-size: 14px;"/>
                 </VBox>
                 <VBox spacing="14" maxWidth="360">
-                    <TextField fx:id="emailField" promptText="Email" focusTraversable="false" maxWidth="Infinity" prefHeight="48" style="-fx-background-radius: 12; -fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-padding: 0 16; -fx-font-size: 14px; -fx-prompt-text-fill: #9ca3af; -fx-text-fill: #111827;"/>
-                    <PasswordField fx:id="passwordField" promptText="Mật khẩu" focusTraversable="false" maxWidth="Infinity" prefHeight="48" style="-fx-background-radius: 12; -fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 12; -fx-padding: 0 16; -fx-font-size: 14px; -fx-prompt-text-fill: #9ca3af; -fx-text-fill: #111827;"/>
+                    <TextField fx:id="emailField" promptText="Email" maxWidth="Infinity" prefHeight="52" style="-fx-background-radius: 14; -fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 14; -fx-padding: 0 18; -fx-font-size: 15px; -fx-prompt-text-fill: #9ca3af; -fx-text-fill: #111827; -fx-border-width: 2;">
+                        <styleClass>
+                            <String fx:value="form-field"/>
+                        </styleClass>
+                    </TextField>
+                    <PasswordField fx:id="passwordField" promptText="Mật khẩu" maxWidth="Infinity" prefHeight="52" style="-fx-background-radius: 14; -fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 14; -fx-padding: 0 18; -fx-font-size: 15px; -fx-prompt-text-fill: #9ca3af; -fx-text-fill: #111827; -fx-border-width: 2;">
+                        <styleClass>
+                            <String fx:value="form-field"/>
+                        </styleClass>
+                    </PasswordField>
                 </VBox>
-                <Button fx:id="signInButton" text="Đăng nhập" maxWidth="360" prefHeight="48" onAction="#onSignIn" style="-fx-background-color: linear-gradient(to right, #2563eb, #1d4ed8); -fx-background-radius: 12; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: 600;"/>
-                <Hyperlink fx:id="forgotPasswordLink" text="Quên mật khẩu?" onAction="#onForgotPassword" style="-fx-text-fill: #2563eb; -fx-font-size: 13px;"/>
+                <Button fx:id="signInButton" text="Đăng nhập" maxWidth="360" prefHeight="52" onAction="#onSignIn" style="-fx-background-color: linear-gradient(to right, #3b82f6, #2563eb); -fx-background-radius: 14; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 600; -fx-cursor: hand;">
+                    <styleClass>
+                        <String fx:value="primary-button"/>
+                    </styleClass>
+                </Button>
+                <Hyperlink fx:id="forgotPasswordLink" text="Quên mật khẩu?" onAction="#onForgotPassword" style="-fx-text-fill: #2563eb; -fx-font-size: 14px; -fx-font-weight: 500; -fx-underline: false; -fx-cursor: hand;"/>
                 <Separator maxWidth="360"/>
-                <Button fx:id="registerButton" text="Tạo tài khoản mới" maxWidth="360" prefHeight="48" onAction="#onRegister" style="-fx-background-color: #f3f4f6; -fx-border-color: transparent; -fx-background-radius: 12; -fx-text-fill: #111827; -fx-font-size: 14px; -fx-font-weight: 500;"/>
+                <Button fx:id="registerButton" text="Tạo tài khoản mới" maxWidth="360" prefHeight="52" onAction="#onRegister" style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0; -fx-border-width: 2; -fx-background-radius: 14; -fx-text-fill: #1e293b; -fx-font-size: 15px; -fx-font-weight: 500; -fx-cursor: hand;">
+                    <styleClass>
+                        <String fx:value="secondary-button"/>
+                    </styleClass>
+                </Button>
                 <Label fx:id="statusLabel" textFill="#6b7280" wrapText="true" maxWidth="360" style="-fx-font-size: 13px; -fx-alignment: center-left;"/>
             </VBox>
         </center>

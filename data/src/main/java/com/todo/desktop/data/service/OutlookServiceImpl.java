@@ -372,23 +372,33 @@ public final class OutlookServiceImpl implements OutlookService {
 
     @Override
     public CompletableFuture<List<EmailMessage>> getInboxMessages(int top) {
+        return getInboxMessages(top, 0);
+    }
+    
+    @Override
+    public CompletableFuture<List<EmailMessage>> getInboxMessages(int top, int skip) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 String accessToken = getValidAccessToken();
                 
-                URL url = new URL(GRAPH_API_ENDPOINT + "/me/messages?$top=" + top + "&$select=id,subject,from,toRecipients,bodyPreview,receivedDateTime,isRead,hasAttachments");
+                URL url = new URL(GRAPH_API_ENDPOINT + "/me/messages?$top=" + top + "&$skip=" + skip + "&$select=id,subject,from,toRecipients,bodyPreview,receivedDateTime,isRead,hasAttachments&$orderby=receivedDateTime desc&$count=true");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setRequestProperty("Authorization", "Bearer " + accessToken);
                 
                 int responseCode = conn.getResponseCode();
+                System.out.println("DEBUG: Graph API response code: " + responseCode);
                 if (responseCode >= 400) {
-                    throw new IOException("Lấy email thất bại (HTTP " + responseCode + "): " + readErrorResponse(conn));
+                    String errorResponse = readErrorResponse(conn);
+                    System.out.println("DEBUG: Graph API error: " + errorResponse);
+                    throw new IOException("Lấy email thất bại (HTTP " + responseCode + "): " + errorResponse);
                 }
                 
                 String response = readResponse(conn);
+                System.out.println("DEBUG: Graph API response length: " + response.length());
                 JsonObject jsonResponse = JsonParser.parseString(response).getAsJsonObject();
                 JsonArray messages = jsonResponse.getAsJsonArray("value");
+                System.out.println("DEBUG: Number of emails in response: " + messages.size());
                 
                 List<EmailMessage> emailList = new ArrayList<>();
                 for (JsonElement msgElement : messages) {

@@ -4,40 +4,40 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root" prefWidth="1280" prefHeight="860" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+<BorderPane fx:id="root" prefWidth="1400" prefHeight="900" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
             fx:controller="com.todo.desktop.ui.controller.MainShellController" 
-            style="-fx-background-color: linear-gradient(to bottom right, #0f172a 0%, #1f2937 100%);"
+            style="-fx-background-color: linear-gradient(135deg, #1a202c 0%, #2d3748 50%, #1a202c 100%);"
             stylesheets="@styles.css">
     <fx:define>
         <ToggleGroup fx:id="mainNavGroup"/>
     </fx:define>
     <padding>
-        <Insets top="36" right="36" bottom="36" left="36"/>
+        <Insets top="40" right="40" bottom="40" left="40"/>
     </padding>
     <top>
-        <VBox spacing="18">
-            <HBox alignment="CENTER_LEFT" spacing="18">
-                <VBox spacing="6">
-                    <Label fx:id="sectionTitleLabel" text="Deadline" style="-fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: 700;"/>
-                    <Label fx:id="sectionSubtitleLabel" text="Theo dõi công việc và email của bạn" style="-fx-text-fill: rgba(226,232,240,0.8); -fx-font-size: 15px;"/>
+        <VBox spacing="24">
+            <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 24 32; -fx-background-color: rgba(45,55,72,0.8); -fx-background-radius: 24; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0.3, 0, 8);">
+                <VBox spacing="8">
+                    <Label fx:id="sectionTitleLabel" text="Deadline" style="-fx-text-fill: #f7fafc; -fx-font-size: 36px; -fx-font-weight: 800; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0.5, 0, 2);"/>
+                    <Label fx:id="sectionSubtitleLabel" text="Theo dõi công việc và email của bạn" style="-fx-text-fill: #e2e8f0; -fx-font-size: 16px;"/>
                 </VBox>
                 <Region HBox.hgrow="ALWAYS"/>
-                <HBox alignment="CENTER_RIGHT" spacing="14">
-                    <StackPane prefWidth="48" prefHeight="48" style="-fx-background-radius: 18; -fx-background-color: rgba(30,64,175,0.32);">
-                        <ImageView fx:id="avatarImageView" fitWidth="48" fitHeight="48" preserveRatio="true" smooth="true" />
-                        <Label fx:id="avatarFallback" text="A" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: 600;" visible="false" managed="false"/>
+                <HBox alignment="CENTER_RIGHT" spacing="16">
+                    <StackPane prefWidth="56" prefHeight="56" style="-fx-background-radius: 20; -fx-background-color: rgba(74,85,104,0.6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0.3, 0, 4);">
+                        <ImageView fx:id="avatarImageView" fitWidth="56" fitHeight="56" preserveRatio="true" smooth="true" />
+                        <Label fx:id="avatarFallback" text="A" style="-fx-text-fill: #f7fafc; -fx-font-size: 20px; -fx-font-weight: 700;" visible="false" managed="false"/>
                     </StackPane>
-                    <VBox alignment="CENTER_LEFT" spacing="2">
-                        <Label fx:id="userNameLabel" text="Tên người dùng" style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 600;"/>
-                        <Label fx:id="userEmailLabel" text="email@example.com" style="-fx-text-fill: rgba(226,232,240,0.75); -fx-font-size: 13px;"/>
+                    <VBox alignment="CENTER_LEFT" spacing="3">
+                        <Label fx:id="userNameLabel" text="Tên người dùng" style="-fx-text-fill: #f7fafc; -fx-font-size: 17px; -fx-font-weight: 700;"/>
+                        <Label fx:id="userEmailLabel" text="email@example.com" style="-fx-text-fill: #cbd5e0; -fx-font-size: 14px;"/>
                     </VBox>
-                    <Button fx:id="signOutButton" text="Đăng xuất" onAction="#onSignOut" style="-fx-background-radius: 12; -fx-background-color: rgba(148,163,184,0.2); -fx-text-fill: white; -fx-font-weight: 600; -fx-padding: 10 18;"/>
+                    <Button fx:id="signOutButton" text="Đăng xuất" onAction="#onSignOut" style="-fx-background-radius: 14; -fx-background-color: rgba(237,137,54,0.8); -fx-text-fill: #f7fafc; -fx-font-weight: 600; -fx-padding: 12 24; -fx-font-size: 14px; -fx-cursor: hand;"/>
                 </HBox>
             </HBox>
         </VBox>
     </top>
     <center>
-        <StackPane fx:id="contentContainer" style="-fx-background-color: rgba(15,23,42,0.82); -fx-background-radius: 28; -fx-padding: 28;" BorderPane.alignment="CENTER">
+        <StackPane fx:id="contentContainer" style="-fx-background-color: #2d3748; -fx-background-radius: 32; -fx-padding: 32; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 24, 0.4, 0, 8);" BorderPane.alignment="CENTER">
             <fx:include fx:id="deadlineOverview" source="deadline-overview.fxml"/>
             <fx:include fx:id="inboxView" source="inbox.fxml" visible="false" managed="false"/>
             <fx:include fx:id="emailDetailView" source="email-detail.fxml" visible="false" managed="false"/>
@@ -45,10 +45,10 @@
         </StackPane>
     </center>
     <bottom>
-        <HBox alignment="CENTER" spacing="24" style="-fx-background-color: rgba(15,23,42,0.55); -fx-background-radius: 18; -fx-padding: 18 28 20 28;">
-            <ToggleButton fx:id="deadlineToggle" text="Deadline" toggleGroup="$mainNavGroup" onAction="#showDeadline" styleClass="nav-toggle nav-toggle-active"/>
-            <ToggleButton fx:id="emailToggle" text="Hộp thư" toggleGroup="$mainNavGroup" onAction="#showEmail" styleClass="nav-toggle"/>
-            <ToggleButton fx:id="settingsToggle" text="Cài đặt" toggleGroup="$mainNavGroup" onAction="#showSettings" styleClass="nav-toggle"/>
+        <HBox alignment="CENTER" spacing="32" style="-fx-background-color: rgba(45,55,72,0.9); -fx-background-radius: 24; -fx-padding: 24 36 26 36; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 16, 0.3, 0, 4);">
+            <ToggleButton fx:id="deadlineToggle" text="📅 Deadline" toggleGroup="$mainNavGroup" onAction="#showDeadline" styleClass="nav-toggle-active" style="-fx-background-color: linear-gradient(135deg, #4a5568, #2d3748); -fx-text-fill: #f7fafc; -fx-background-radius: 16; -fx-padding: 14 32; -fx-font-weight: 700; -fx-font-size: 15px; -fx-cursor: hand;"/>
+            <ToggleButton fx:id="emailToggle" text="📧 Hộp thư" toggleGroup="$mainNavGroup" onAction="#showEmail" styleClass="nav-toggle" style="-fx-background-color: transparent; -fx-text-fill: #cbd5e0; -fx-background-radius: 16; -fx-padding: 14 32; -fx-font-weight: 600; -fx-font-size: 15px; -fx-cursor: hand; -fx-border-color: #4a5568; -fx-border-width: 2;"/>
+            <ToggleButton fx:id="settingsToggle" text="⚙️ Cài đặt" toggleGroup="$mainNavGroup" onAction="#showSettings" styleClass="nav-toggle" style="-fx-background-color: transparent; -fx-text-fill: #cbd5e0; -fx-background-radius: 16; -fx-padding: 14 32; -fx-font-weight: 600; -fx-font-size: 15px; -fx-cursor: hand; -fx-border-color: #4a5568; -fx-border-width: 2;"/>
         </HBox>
     </bottom>
 </BorderPane>

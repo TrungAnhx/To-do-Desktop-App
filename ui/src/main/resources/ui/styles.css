@@ -333,3 +333,68 @@
 .toggle-button:hover {
     -fx-background-color: rgba(59, 130, 246, 0.2);
 }
+
+/* ==================== LOGIN FORM STYLES ==================== */
+.form-field {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #e5e7eb;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-border-width: 2;
+    -fx-padding: 0 18;
+    -fx-font-size: 15px;
+    -fx-prompt-text-fill: #9ca3af;
+    -fx-text-fill: #111827;
+}
+
+.form-field:focused {
+    -fx-border-color: #3b82f6;
+    -fx-background-color: #ffffff;
+}
+
+.form-field:hover {
+    -fx-border-color: #c7d2fe;
+}
+
+.primary-button {
+    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
+    -fx-text-fill: white;
+    -fx-font-weight: 600;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to right, #2563eb, #1d4ed8);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.3), 10, 0.3, 0, 4);
+}
+
+.primary-button:pressed {
+    -fx-background-color: linear-gradient(to right, #1d4ed8, #1e40af);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+.secondary-button {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 2;
+    -fx-text-fill: #1e293b;
+    -fx-font-weight: 500;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: #cbd5e1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0.2, 0, 2);
+}
+
+.secondary-button:pressed {
+    -fx-background-color: #e2e8f0;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}

@@ -48,63 +48,71 @@ public final class LoginController {
     private void initialize() {
         // Enter key để đăng nhập (thay thế click nút)
         if (emailField != null) {
-            emailField.setOnAction(e -> onSignIn());
-            // Cho phép tab để di chuyển focus
-            emailField.setFocusTraversable(false);
+            emailField.setOnAction(e -> {
+                passwordField.requestFocus();
+                // Automatically go to password field when Enter is pressed in email field
+                javafx.application.Platform.runLater(() -> passwordField.selectAll());
+            });
         }
         if (passwordField != null) {
             passwordField.setOnAction(e -> onSignIn());
-            passwordField.setFocusTraversable(false);
         }
         
-        // Focus vào dummy node thay vì email field
+        // Set up tab navigation between fields
+        if (emailField != null) {
+            emailField.setOnKeyPressed(event -> {
+                if (event.getCode() == javafx.scene.input.KeyCode.TAB) {
+                    if (!event.isShiftDown()) {
+                        // Tab forward: move to password field
+                        passwordField.requestFocus();
+                        javafx.application.Platform.runLater(() -> passwordField.selectAll());
+                        event.consume();
+                    }
+                }
+            });
+        }
+        
+        if (passwordField != null) {
+            passwordField.setOnKeyPressed(event -> {
+                if (event.getCode() == javafx.scene.input.KeyCode.TAB) {
+                    if (event.isShiftDown()) {
+                        // Shift+Tab back: move to email field
+                        emailField.requestFocus();
+                        javafx.application.Platform.runLater(() -> emailField.selectAll());
+                        event.consume();
+                    }
+                }
+            });
+        }
+        
+        // Add focus styling for better UX
+        addFocusListeners();
+        
+        // Focus vào dummy node ban đầu
         if (focusDummy != null) {
             javafx.application.Platform.runLater(() -> {
                 focusDummy.requestFocus();
             });
         }
-        
-        // Khi click vào vùng ngoài textfield thì remove focus (ẩn cursor)
-        if (loginRoot != null && focusDummy != null) {
-            loginRoot.setOnMousePressed(event -> {
-                javafx.scene.Node target = (javafx.scene.Node) event.getTarget();
-                
-                // Check if clicked on or inside a TextField/PasswordField
-                boolean isTextFieldClick = false;
-                javafx.scene.Node node = target;
-                while (node != null) {
-                    if (node == emailField || node == passwordField) {
-                        isTextFieldClick = true;
-                        break;
-                    }
-                    node = node.getParent();
+    }
+
+    private void addFocusListeners() {
+        if (emailField != null) {
+            emailField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+                if (newVal) {
+                    emailField.setStyle(emailField.getStyle() + "; -fx-border-color: #3b82f6; -fx-background-color: #ffffff;");
+                } else {
+                    emailField.setStyle("-fx-background-radius: 14; -fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 14; -fx-padding: 0 18; -fx-font-size: 15px; -fx-prompt-text-fill: #9ca3af; -fx-text-fill: #111827; -fx-border-width: 2;");
                 }
-                
-                // If not clicking on text field, remove focus and hide cursor
-                if (!isTextFieldClick) {
-                    // Workaround: Tạm thời ẩn và hiện lại để force ẩn cursor
-                    boolean emailVisible = emailField != null && emailField.isVisible();
-                    boolean passVisible = passwordField != null && passwordField.isVisible();
-                    
-                    if (emailField != null) {
-                        emailField.setVisible(false);
-                    }
-                    if (passwordField != null) {
-                        passwordField.setVisible(false);
-                    }
-                    
-                    // Remove focus
-                    focusDummy.requestFocus();
-                    
-                    // Hiện lại ngay lập tức
-                    javafx.application.Platform.runLater(() -> {
-                        if (emailField != null && emailVisible) {
-                            emailField.setVisible(true);
-                        }
-                        if (passwordField != null && passVisible) {
-                            passwordField.setVisible(true);
-                        }
-                    });
+            });
+        }
+        
+        if (passwordField != null) {
+            passwordField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+                if (newVal) {
+                    passwordField.setStyle(passwordField.getStyle() + "; -fx-border-color: #3b82f6; -fx-background-color: #ffffff;");
+                } else {
+                    passwordField.setStyle("-fx-background-radius: 14; -fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 14; -fx-padding: 0 18; -fx-font-size: 15px; -fx-prompt-text-fill: #9ca3af; -fx-text-fill: #111827; -fx-border-width: 2;");
                 }
             });
         }

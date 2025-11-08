@@ -8,15 +8,16 @@
            stylesheets="@styles.css">
     <!-- Main Inbox View -->
     <VBox fx:id="inboxMainView" spacing="24" style="-fx-background-color: transparent;">
-        <HBox alignment="CENTER_LEFT" spacing="14">
-            <Button fx:id="refreshButton" text="🔄 Làm mới" onAction="#onRefresh" styleClass="button-secondary"
-                    style="-fx-padding: 10 20;"/>
-            <ToggleButton fx:id="unreadToggle" text="📧 Chưa đọc" styleClass="toggle-button"/>
-            <ToggleButton fx:id="attachmentToggle" text="📎 Có tệp" styleClass="toggle-button"/>
+        <HBox alignment="CENTER_LEFT" spacing="16" style="-fx-padding: 20 24; -fx-background-color: rgba(45,55,72,0.6); -fx-background-radius: 16;">
+            <Button fx:id="refreshButton" text="🔄 Làm mới" onAction="#onRefresh" styleClass="button-primary"
+                    style="-fx-padding: 12 24; -fx-font-size: 14px; -fx-background-radius: 14; -fx-background-color: #3182ce; -fx-text-fill: #f7fafc;"/>
+            <ToggleButton fx:id="unreadToggle" text="📧 Chưa đọc" styleClass="toggle-button" style="-fx-background-radius: 14; -fx-padding: 10 20; -fx-font-size: 14px; -fx-background-color: rgba(49,130,206,0.2); -fx-text-fill: #63b3ed; -fx-border-color: #3182ce;"/>
+            <ToggleButton fx:id="attachmentToggle" text="📎 Có tệp" styleClass="toggle-button" style="-fx-background-radius: 14; -fx-padding: 10 20; -fx-font-size: 14px; -fx-background-color: rgba(49,130,206,0.2); -fx-text-fill: #63b3ed; -fx-border-color: #3182ce;"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button fx:id="composeButton" text="✉ Soạn email" onAction="#onCompose" styleClass="button-success"/>
+            <Button fx:id="composeButton" text="✉ Soạn email" onAction="#onCompose" styleClass="button-success"
+                    style="-fx-padding: 12 24; -fx-font-size: 14px; -fx-background-radius: 14; -fx-background-color: #38a169; -fx-text-fill: #f7fafc;"/>
         </HBox>
-        <ListView fx:id="messageList" VBox.vgrow="ALWAYS" styleClass="list-view"/>
+        <ListView fx:id="messageList" VBox.vgrow="ALWAYS" styleClass="list-view" style="-fx-background-color: transparent; -fx-border-radius: 16; -fx-padding: 0;"/>
     </VBox>
     
     <!-- Compose Email Overlay -->
