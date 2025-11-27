@@ -39,9 +39,18 @@ public final class DesktopApp extends Application {
 
     private void switchToMain(Stage stage) {
         try {
+            System.out.println("DEBUG: Attempting to switch to Main Shell...");
             showMain(stage);
+            System.out.println("DEBUG: Switched to Main Shell successfully.");
         } catch (Exception e) {
-            throw new RuntimeException("Không thể mở giao diện chính", e);
+            System.err.println("CRITICAL ERROR: Failed to switch to main screen.");
+            e.printStackTrace();
+            // Optional: Show error alert to user
+            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi ứng dụng");
+            alert.setHeaderText("Không thể tải giao diện chính");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
@@ -54,15 +63,29 @@ public final class DesktopApp extends Application {
     }
 
     private void showMain(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main-shell.fxml"));
-        loader.setControllerFactory(module);
-        Parent root = loader.load();
-        Scene scene = new Scene(root, 1360, 860);
-        stage.setScene(scene);
-        stage.centerOnScreen();
+        System.out.println("DEBUG: showMain started");
+        try {
+            System.out.println("DEBUG: Loading main-shell.fxml...");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main-shell.fxml"));
+            loader.setControllerFactory(module);
+            Parent root = loader.load();
+            System.out.println("DEBUG: main-shell.fxml loaded successfully");
+            
+            Scene scene = new Scene(root, 1360, 860);
+            System.out.println("DEBUG: Scene created");
+            
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            System.out.println("DEBUG: Stage scene set");
 
-        com.todo.desktop.ui.controller.MainShellController controller = loader.getController();
-        controller.setOnSignOut(() -> Platform.runLater(() -> switchToLogin(stage)));
+            com.todo.desktop.ui.controller.MainShellController controller = loader.getController();
+            controller.setOnSignOut(() -> Platform.runLater(() -> switchToLogin(stage)));
+            System.out.println("DEBUG: Controller configured");
+        } catch (Throwable t) {
+            System.err.println("CRITICAL ERROR in showMain:");
+            t.printStackTrace();
+            throw t;
+        }
     }
 
     public static void main(String[] args) {

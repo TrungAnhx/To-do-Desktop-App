@@ -13,6 +13,9 @@ public interface OutlookService {
     CompletableFuture<List<EmailMessage>> getInboxMessages(int top, int skip);
     CompletableFuture<EmailMessage> getMessageById(String messageId);
     CompletableFuture<byte[]> downloadAttachment(String messageId, String attachmentId);
+    CompletableFuture<Void> deleteMessage(String messageId);
+    CompletableFuture<Void> reply(String messageId, String comment);
+    CompletableFuture<Void> forward(String messageId, String toEmail, String comment);
     boolean isConnected();
     void disconnect();
 }

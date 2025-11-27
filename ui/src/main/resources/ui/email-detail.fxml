@@ -10,69 +10,60 @@
     
     <!-- Header with Back Button -->
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="16" style="-fx-padding: 0 0 20 0;">
-            <Button fx:id="backButton" text="← Quay lại" onAction="#onBack" styleClass="button-secondary"
-                    style="-fx-font-size: 14px; -fx-padding: 10 20;"/>
+        <HBox alignment="CENTER_LEFT" spacing="16" style="-fx-padding: 0 0 16 0;">
+            <Button fx:id="backButton" text="←" onAction="#onBack" styleClass="button-icon">
+                <tooltip><Tooltip text="Quay lại"/></tooltip>
+            </Button>
+            <Label text="Chi tiết Email" styleClass="header-medium" style="-fx-text-fill: -fx-text-muted;"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="statusLabel" styleClass="label-caption"/>
+            <Label fx:id="statusLabel" styleClass="text-caption"/>
         </HBox>
     </top>
     
     <!-- Content -->
     <center>
         <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: transparent;" styleClass="scroll-pane">
-            <VBox spacing="24">
+            <VBox spacing="20" style="-fx-padding: 0 16 0 0;"> <!-- Right padding for scrollbar -->
                 
                 <!-- Email Card -->
-                <VBox spacing="24" styleClass="card-glass">
+                <VBox spacing="24" styleClass="card">
                     
                     <!-- Subject -->
-                    <Label fx:id="subjectLabel" wrapText="true" styleClass="label-title"
-                           style="-fx-font-size: 26px; -fx-text-fill: white;"/>
+                    <Label fx:id="subjectLabel" wrapText="true" styleClass="header-large"/>
                     
-                    <!-- Sender Card -->
-                    <HBox alignment="CENTER_LEFT" spacing="16" 
-                          style="-fx-background-color: rgba(59, 130, 246, 0.08); -fx-padding: 20; -fx-background-radius: 16;">
-                        <StackPane prefWidth="56" prefHeight="56" 
-                                   style="-fx-background-color: linear-gradient(135deg, #3b82f6, #8b5cf6); -fx-background-radius: 28;">
-                            <Label fx:id="senderAvatarLabel" text="A" 
-                                   style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: 700;"/>
+                    <!-- Sender Info -->
+                    <HBox alignment="CENTER_LEFT" spacing="16">
+                        <StackPane prefWidth="48" prefHeight="48" styleClass="avatar-circle">
+                            <Label fx:id="senderAvatarLabel" text="A" styleClass="avatar-text"/>
                         </StackPane>
-                        <VBox spacing="4" HBox.hgrow="ALWAYS">
-                            <Label fx:id="senderNameLabel" text="Sender Name" 
-                                   style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: white;"/>
-                            <Label fx:id="senderEmailLabel" text="sender@example.com" styleClass="label-subtitle"/>
+                        <VBox spacing="2" HBox.hgrow="ALWAYS">
+                            <Label fx:id="senderNameLabel" text="Sender Name" styleClass="header-medium"/>
+                            <Label fx:id="senderEmailLabel" text="sender@example.com" styleClass="text-muted"/>
                         </VBox>
-                        <VBox spacing="4" alignment="TOP_RIGHT">
-                            <Label fx:id="timeLabel" text="10:30 AM" styleClass="label-caption"
-                                   style="-fx-font-size: 13px;"/>
-                            <Label fx:id="dateLabel" styleClass="label-caption"
-                                   style="-fx-font-size: 12px;"/>
+                        <VBox spacing="2" alignment="TOP_RIGHT">
+                            <Label fx:id="timeLabel" text="10:30 AM" styleClass="text-caption" style="-fx-font-weight: bold;"/>
+                            <Label fx:id="dateLabel" styleClass="text-caption"/>
                         </VBox>
                     </HBox>
                     
                     <!-- To Recipients -->
                     <HBox spacing="8" alignment="CENTER_LEFT">
-                        <Label text="Tới:" style="-fx-text-fill: rgba(148, 163, 184, 0.9); -fx-font-size: 13px; -fx-font-weight: 600;"/>
-                        <Label fx:id="toLabel" wrapText="true" styleClass="label-subtitle"
-                               style="-fx-font-size: 13px;"/>
+                        <Label text="Tới:" style="-fx-font-weight: 600;" styleClass="text-muted"/>
+                        <Label fx:id="toLabel" wrapText="true" styleClass="text-body"/>
                     </HBox>
                     
-                    <!-- Divider -->
-                    <Separator style="-fx-background-color: rgba(148, 163, 184, 0.15);"/>
+                    <Separator style="-fx-background-color: #E2E8F0;"/>
                     
                     <!-- Body Content -->
-                    <VBox spacing="16">
-                        <Label fx:id="bodyLabel" wrapText="true" 
-                               style="-fx-font-size: 15px; -fx-text-fill: rgba(226, 232, 240, 0.95); -fx-line-spacing: 6px;"/>
+                    <VBox spacing="16" style="-fx-min-height: 200;">
+                        <Label fx:id="bodyLabel" wrapText="true" styleClass="text-body" style="-fx-line-spacing: 6px;"/>
                     </VBox>
                     
                     <!-- Attachments Section -->
-                    <VBox fx:id="attachmentsSection" spacing="16" visible="false" managed="false">
-                        <Separator style="-fx-background-color: rgba(148, 163, 184, 0.15);"/>
-                        <Label text="📎 Tệp đính kèm" 
-                               style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: white;"/>
-                        <VBox fx:id="attachmentsList" spacing="10"/>
+                    <VBox fx:id="attachmentsSection" spacing="12" visible="false" managed="false">
+                        <Separator style="-fx-background-color: #E2E8F0;"/>
+                        <Label text="Tệp đính kèm" styleClass="header-medium" style="-fx-font-size: 14px;"/>
+                        <VBox fx:id="attachmentsList" spacing="8"/>
                     </VBox>
                     
                 </VBox>
@@ -83,12 +74,11 @@
     
     <!-- Bottom Actions -->
     <bottom>
-        <HBox spacing="16" alignment="CENTER_LEFT" 
-              style="-fx-background-color: rgba(30, 41, 59, 0.5); -fx-padding: 20; -fx-background-radius: 16;">
+        <HBox spacing="16" alignment="CENTER_LEFT" style="-fx-padding: 16 0 0 0;">
             <Button fx:id="replyButton" text="↩ Trả lời" onAction="#onReply" styleClass="button-primary"/>
             <Button fx:id="forwardButton" text="→ Chuyển tiếp" onAction="#onForward" styleClass="button-secondary"/>
-            <Button fx:id="deleteButton" text="🗑 Xóa" onAction="#onDelete" styleClass="button-danger"/>
             <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="deleteButton" text="🗑 Xóa" onAction="#onDelete" styleClass="button-danger"/>
         </HBox>
     </bottom>
     

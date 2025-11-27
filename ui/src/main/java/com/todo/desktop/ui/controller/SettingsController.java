@@ -13,6 +13,7 @@ public final class SettingsController {
 
     private AuthService authService;
     private OutlookService outlookService;
+    private MainShellController mainShellController;
 
     @FXML
     private CheckBox darkModeToggle;
@@ -50,11 +51,20 @@ public final class SettingsController {
         this.outlookService = outlookService;
         updateOutlookStatus();
     }
+    
+    public void setMainShellController(MainShellController mainShellController) {
+        this.mainShellController = mainShellController;
+    }
 
     @FXML
     private void initialize() {
-        updateAccountInfo();
-        updateOutlookStatus();
+        try {
+            updateAccountInfo();
+            updateOutlookStatus();
+        } catch (Exception e) {
+            System.err.println("ERROR: SettingsController initialization failed");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -70,6 +80,11 @@ public final class SettingsController {
                     setOutlookMessage("Kết nối thành công!", false);
                     updateOutlookStatus();
                     connectOutlookButton.setDisable(false);
+                    
+                    // Notify MainShellController to refresh inbox
+                    if (mainShellController != null && mainShellController.getInboxViewController() != null) {
+                        mainShellController.getInboxViewController().onRefresh();
+                    }
                 }))
                 .exceptionally(ex -> {
                     Platform.runLater(() -> {

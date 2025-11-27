@@ -14,7 +14,11 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 
 import java.io.ByteArrayInputStream;
 import java.net.URI;
@@ -61,12 +65,6 @@ public final class MainShellController {
     private Parent settingsView;
 
     @FXML
-    private Label sectionTitleLabel;
-
-    @FXML
-    private Label sectionSubtitleLabel;
-
-    @FXML
     private Label userNameLabel;
 
     @FXML
@@ -93,8 +91,7 @@ public final class MainShellController {
     @FXML
     private SettingsController settingsViewController;
 
-    private static final String ACTIVE_NAV_STYLE = "-fx-background-color: linear-gradient(135deg, #4a5568, #2d3748); -fx-text-fill: #f7fafc; -fx-background-radius: 16; -fx-font-weight: 700; -fx-font-size: 15px; -fx-padding: 14 32; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.3, 0, 2);";
-    private static final String INACTIVE_NAV_STYLE = "-fx-background-color: transparent; -fx-text-fill: #cbd5e0; -fx-background-radius: 16; -fx-border-color: #4a5568; -fx-border-width: 2; -fx-font-weight: 600; -fx-font-size: 15px; -fx-padding: 14 32; -fx-cursor: hand;";
+    private Section currentSection = Section.EMAIL;
 
     private enum Section {
         DEADLINE,
@@ -124,7 +121,12 @@ public final class MainShellController {
         updateUserProfile();
         if (settingsViewController != null) {
             settingsViewController.setAuthService(authService);
+            settingsViewController.setMainShellController(this);
         }
+    }
+    
+    public InboxController getInboxViewController() {
+        return inboxViewController;
     }
 
     public void setOnSignOut(Runnable onSignOut) {
@@ -162,12 +164,51 @@ public final class MainShellController {
                 settingsViewController.setOutlookService(outlookService);
             }
         }
-        applyNavStyles();
-        showSection(Section.DEADLINE);
-        if (deadlineToggle != null) {
-            deadlineToggle.setSelected(true);
+        
+        showSection(Section.EMAIL); 
+        if (emailToggle != null) {
+            emailToggle.setSelected(true);
         }
         updateUserProfile();
+        
+        // Global Keyboard Shortcuts
+        if (root != null) {
+            root.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    setupShortcuts(newScene);
+                }
+            });
+        }
+    }
+    
+    private void setupShortcuts(javafx.scene.Scene scene) {
+        KeyCombination newCombo = new KeyCodeCombination(KeyCode.N, KeyCombination.SHORTCUT_DOWN);
+        KeyCombination refreshCombo = new KeyCodeCombination(KeyCode.F5);
+        
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (newCombo.match(event)) {
+                if (currentSection == Section.EMAIL && inboxViewController != null) {
+                    inboxViewController.onCompose();
+                    event.consume();
+                } else if (currentSection == Section.DEADLINE && deadlineOverviewController != null) {
+                    deadlineOverviewController.onAddDeadline();
+                    event.consume();
+                }
+            } else if (refreshCombo.match(event)) {
+                if (currentSection == Section.EMAIL && inboxViewController != null) {
+                    inboxViewController.onRefresh();
+                    event.consume();
+                } else if (currentSection == Section.DEADLINE && deadlineOverviewController != null) {
+                    // deadlineOverviewController.refresh(); // Need to expose refresh
+                    event.consume();
+                }
+            } else if (event.getCode() == KeyCode.DELETE) {
+                if (currentSection == Section.EMAIL_DETAIL && emailDetailViewController != null) {
+                    emailDetailViewController.onDelete();
+                    event.consume();
+                }
+            }
+        });
     }
 
     @FXML
@@ -217,6 +258,9 @@ public final class MainShellController {
     }
 
     private void showSection(Section section) {
+        this.currentSection = section;
+        
+        // Sync toggle state if changed programmatically
         if (deadlineToggle != null && section == Section.DEADLINE) {
             deadlineToggle.setSelected(true);
         }
@@ -226,8 +270,8 @@ public final class MainShellController {
         if (settingsToggle != null && section == Section.SETTINGS) {
             settingsToggle.setSelected(true);
         }
-        applyNavStyles();
 
+        // Visibility logic
         if (deadlineOverview != null) {
             boolean showDeadline = section == Section.DEADLINE;
             deadlineOverview.setVisible(showDeadline);
@@ -248,36 +292,6 @@ public final class MainShellController {
             settingsView.setVisible(showSettings);
             settingsView.setManaged(showSettings);
         }
-
-        if (sectionTitleLabel != null && sectionSubtitleLabel != null) {
-            switch (section) {
-                case DEADLINE -> {
-                    sectionTitleLabel.setText("Deadline");
-                    sectionSubtitleLabel.setText("Quản lý tiến độ và nhắc việc của bạn");
-                }
-                case EMAIL -> {
-                    sectionTitleLabel.setText("📧 Hộp thư");
-                    sectionSubtitleLabel.setText("Xem và quản lý email từ Outlook");
-                }
-                case SETTINGS -> {
-                    sectionTitleLabel.setText("⚙️ Cài đặt");
-                    sectionSubtitleLabel.setText("Cấu hình tài khoản và ứng dụng");
-                }
-            }
-        }
-    }
-
-    private void applyNavStyles() {
-        styleToggle(deadlineToggle, deadlineToggle != null && deadlineToggle.isSelected());
-        styleToggle(emailToggle, emailToggle != null && emailToggle.isSelected());
-        styleToggle(settingsToggle, settingsToggle != null && settingsToggle.isSelected());
-    }
-
-    private void styleToggle(ToggleButton toggle, boolean active) {
-        if (toggle == null) {
-            return;
-        }
-        toggle.setStyle(active ? ACTIVE_NAV_STYLE : INACTIVE_NAV_STYLE);
     }
 
     private void updateUserProfile() {
@@ -330,9 +344,7 @@ public final class MainShellController {
         if (avatarUri == null) {
             avatarImageView.setImage(null);
             avatarImageView.setVisible(false);
-            avatarImageView.setManaged(false);
             avatarFallback.setVisible(true);
-            avatarFallback.setManaged(true);
             return;
         }
         HttpClient client = HttpClient.newHttpClient();
@@ -344,19 +356,15 @@ public final class MainShellController {
                     if (bytes == null || bytes.length == 0) {
                         avatarImageView.setImage(null);
                         avatarImageView.setVisible(false);
-                        avatarImageView.setManaged(false);
                         avatarFallback.setVisible(true);
-                        avatarFallback.setManaged(true);
                     } else {
                         Image image = new Image(new ByteArrayInputStream(bytes));
                         avatarImageView.setImage(image);
                         avatarImageView.setVisible(true);
-                        avatarImageView.setManaged(true);
                         avatarFallback.setVisible(false);
-                        avatarFallback.setManaged(false);
-                        Rectangle clip = new Rectangle(48, 48);
-                        clip.setArcWidth(18);
-                        clip.setArcHeight(18);
+                        
+                        // Apply circular clip
+                        Circle clip = new Circle(20, 20, 20);
                         avatarImageView.setClip(clip);
                     }
                 }));

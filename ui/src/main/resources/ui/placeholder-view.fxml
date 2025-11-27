@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      alignment="CENTER" spacing="16" style="-fx-padding: 40;">
+    
+    <!-- Simple ASCII Art or Icon Label -->
+    <Label fx:id="iconLabel" text="📭" style="-fx-font-size: 64px;" styleClass="text-muted"/>
+    
+    <Label fx:id="titleLabel" text="Không có dữ liệu" styleClass="header-medium"/>
+    
+    <Label fx:id="subtitleLabel" text="Danh sách hiện tại đang trống." styleClass="text-body" 
+           wrapText="true" textAlignment="CENTER"/>
+           
+    <Button fx:id="actionButton" text="Tải lại" styleClass="button-secondary" visible="false" managed="false"/>
+    
+</VBox>

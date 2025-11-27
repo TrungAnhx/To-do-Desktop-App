@@ -8,10 +8,12 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
@@ -123,7 +125,8 @@ public final class EmailDetailController {
     private HBox createAttachmentRow(EmailAttachment attachment) {
         HBox row = new HBox(12);
         row.setAlignment(Pos.CENTER_LEFT);
-        row.setStyle("-fx-background-color: white; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #e5e7eb; -fx-border-width: 1; -fx-border-radius: 8;");
+        row.getStyleClass().add("card-cell"); // Use theme class
+        row.setStyle("-fx-padding: 12;");
         
         // Icon
         Label icon = new Label(getFileIcon(attachment.name()));
@@ -132,17 +135,19 @@ public final class EmailDetailController {
         // File info
         VBox info = new VBox(2);
         Label nameLabel = new Label(attachment.name());
-        nameLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: 600; -fx-text-fill: #1a1a1a;");
+        nameLabel.getStyleClass().add("text-body");
+        nameLabel.setStyle("-fx-font-weight: bold;");
         
         Label sizeLabel = new Label(formatFileSize(attachment.size()));
-        sizeLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #6b7280;");
+        sizeLabel.getStyleClass().add("text-caption");
         
         info.getChildren().addAll(nameLabel, sizeLabel);
         HBox.setHgrow(info, Priority.ALWAYS);
         
         // Download button
         Button downloadBtn = new Button("⬇");
-        downloadBtn.setStyle("-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-padding: 8; -fx-background-radius: 6; -fx-cursor: hand;");
+        downloadBtn.getStyleClass().add("button-icon");
+        downloadBtn.setStyle("-fx-text-fill: -fx-primary;");
         downloadBtn.setOnAction(e -> downloadAttachment(attachment));
         
         row.getChildren().addAll(icon, info, downloadBtn);
@@ -185,17 +190,77 @@ public final class EmailDetailController {
 
     @FXML
     private void onReply() {
-        statusLabel.setText("Tính năng trả lời đang được phát triển");
+        if (outlookService == null || currentEmail == null) return;
+        
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Trả lời Email");
+        dialog.setHeaderText("Trả lời cho: " + currentEmail.from());
+        dialog.setContentText("Nội dung:");
+        
+        dialog.showAndWait().ifPresent(comment -> {
+            statusLabel.setText("Đang gửi trả lời...");
+            outlookService.reply(currentEmail.id(), comment)
+                    .thenAccept(v -> Platform.runLater(() -> statusLabel.setText("Đã gửi trả lời")))
+                    .exceptionally(ex -> {
+                        Platform.runLater(() -> statusLabel.setText("Lỗi: " + ex.getMessage()));
+                        return null;
+                    });
+        });
     }
 
     @FXML
     private void onForward() {
-        statusLabel.setText("Tính năng chuyển tiếp đang được phát triển");
+        if (outlookService == null || currentEmail == null) return;
+        
+        // Simple custom dialog or just two steps. Let's use a simple approach for now.
+        // 1. Ask for Email
+        TextInputDialog emailDialog = new TextInputDialog();
+        emailDialog.setTitle("Chuyển tiếp Email");
+        emailDialog.setHeaderText("Nhập email người nhận:");
+        emailDialog.setContentText("Email:");
+        
+        emailDialog.showAndWait().ifPresent(toEmail -> {
+            // 2. Ask for Comment
+            TextInputDialog commentDialog = new TextInputDialog();
+            commentDialog.setTitle("Chuyển tiếp Email");
+            commentDialog.setHeaderText("Thêm lời nhắn (tùy chọn):");
+            commentDialog.setContentText("Lời nhắn:");
+            
+            commentDialog.showAndWait().ifPresent(comment -> {
+                statusLabel.setText("Đang chuyển tiếp...");
+                outlookService.forward(currentEmail.id(), toEmail, comment)
+                        .thenAccept(v -> Platform.runLater(() -> statusLabel.setText("Đã chuyển tiếp")))
+                        .exceptionally(ex -> {
+                            Platform.runLater(() -> statusLabel.setText("Lỗi: " + ex.getMessage()));
+                            return null;
+                        });
+            });
+        });
     }
 
     @FXML
-    private void onDelete() {
-        statusLabel.setText("Tính năng xóa đang được phát triển");
+    public void onDelete() {
+        if (outlookService == null || currentEmail == null) return;
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Xác nhận xóa");
+        alert.setHeaderText("Bạn có chắc muốn xóa email này?");
+        alert.setContentText("Hành động này không thể hoàn tác.");
+        
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                statusLabel.setText("Đang xóa...");
+                outlookService.deleteMessage(currentEmail.id())
+                        .thenAccept(v -> Platform.runLater(() -> {
+                            statusLabel.setText("Đã xóa");
+                            onBack(); // Go back to list
+                        }))
+                        .exceptionally(ex -> {
+                            Platform.runLater(() -> statusLabel.setText("Xóa thất bại: " + ex.getMessage()));
+                            return null;
+                        });
+            }
+        });
     }
 
     private String extractInitial(String text) {

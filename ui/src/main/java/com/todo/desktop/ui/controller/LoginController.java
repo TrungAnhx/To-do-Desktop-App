@@ -140,11 +140,14 @@ public final class LoginController {
         setBusy(true);
         authService.signInWithPassword(email, password)
                 .thenAccept(profile -> Platform.runLater(() -> {
+                    System.out.println("DEBUG: Sign in future completed. Profile: " + profile);
                     updateStatus("Đăng nhập thành công", false);
                     setBusy(false);
+                    System.out.println("DEBUG: Invoking onLoginSuccess callback.");
                     onLoginSuccess.accept(profile);
                 }))
                 .exceptionally(ex -> {
+                    System.out.println("DEBUG: Sign in failed: " + ex);
                     Platform.runLater(() -> {
                         setBusy(false);
                         updateStatus(resolvePasswordSignInError(ex), true);

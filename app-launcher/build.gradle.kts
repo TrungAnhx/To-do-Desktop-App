@@ -12,6 +12,18 @@ application {
     mainClass.set("com.todo.desktop.app.DesktopApp")
 }
 
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.todo.desktop.app.DesktopApp"
+    }
+    
+    // Include dependencies in jar
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))

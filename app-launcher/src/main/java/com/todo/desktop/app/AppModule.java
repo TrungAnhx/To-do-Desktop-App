@@ -222,6 +222,7 @@ public final class AppModule implements Callback<Class<?>, Object> {
         if (type == InboxController.class) {
             InboxController controller = new InboxController();
             controller.setEmailService(emailService);
+            controller.setOutlookService(outlookService);
             return controller;
         }
         if (type == SettingsController.class) {

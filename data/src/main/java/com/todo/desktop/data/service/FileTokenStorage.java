@@ -32,8 +32,12 @@ public final class FileTokenStorage implements TokenStorage {
     public void saveToken(MicrosoftToken token) {
         try {
             String json = gson.toJson(token);
+            System.out.println("DEBUG: Saving token to file: " + tokenPath);
+            System.out.println("DEBUG: Token expires at: " + token.expiresAt());
             Files.writeString(tokenPath, json);
+            System.out.println("DEBUG: Token saved successfully");
         } catch (IOException e) {
+            System.out.println("DEBUG: Failed to save token: " + e.getMessage());
             throw new RuntimeException("Không thể lưu token", e);
         }
     }

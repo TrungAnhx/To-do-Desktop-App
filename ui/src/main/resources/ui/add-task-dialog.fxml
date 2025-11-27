@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+            stylesheets="@styles.css" styleClass="card">
+    <content>
+        <VBox spacing="16" prefWidth="400">
+            <Label text="Thêm Công Việc Mới" styleClass="header-medium"/>
+            
+            <VBox spacing="8">
+                <Label text="Tiêu đề" styleClass="text-body" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="titleField" promptText="Ví dụ: Hoàn thành báo cáo..." styleClass="text-field"/>
+            </VBox>
+            
+            <VBox spacing="8">
+                <Label text="Mô tả" styleClass="text-body" style="-fx-font-weight: bold;"/>
+                <TextArea fx:id="descriptionArea" promptText="Chi tiết công việc..." prefRowCount="3" wrapText="true" styleClass="text-area"/>
+            </VBox>
+            
+            <VBox spacing="8">
+                <Label text="Hạn chót" styleClass="text-body" style="-fx-font-weight: bold;"/>
+                <DatePicker fx:id="dueDatePicker" promptText="Chọn ngày" maxWidth="Infinity"/>
+            </VBox>
+        </VBox>
+    </content>
+    <buttonTypes>
+        <ButtonType fx:constant="OK"/>
+        <ButtonType fx:constant="CANCEL"/>
+    </buttonTypes>
+</DialogPane>

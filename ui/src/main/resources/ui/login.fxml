@@ -7,58 +7,48 @@
 
 <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
            fx:controller="com.todo.desktop.ui.controller.LoginController" 
-           style="-fx-background-color: linear-gradient(to bottom right, #111827, #1f2937);"
+           style="-fx-background-color: -fx-bg-app;"
            stylesheets="@styles.css">
     <padding>
         <Insets top="48" right="48" bottom="48" left="48"/>
     </padding>
-    <BorderPane fx:id="loginRoot" prefWidth="880" prefHeight="520" style="-fx-background-color: rgba(255,255,255,0.96); -fx-background-radius: 32; -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.24), 42, 0.32, 0, 18);">
+    <BorderPane fx:id="loginRoot" prefWidth="900" prefHeight="550" styleClass="card" style="-fx-padding: 0;">
         <left>
-            <VBox alignment="CENTER_LEFT" spacing="18" prefWidth="320" style="-fx-background-color: linear-gradient(to bottom right, rgba(59,130,246,0.92), rgba(37,99,235,0.88)); -fx-background-radius: 32 0 0 32; -fx-padding: 48 40 48 48;">
-                <Label text="To-do Desktop" style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: 700;"/>
-                <Label text="Quản lý công việc thông minh" wrapText="true" style="-fx-text-fill: rgba(255,255,255,0.88); -fx-font-size: 16px; -fx-line-spacing: 6;"/>
-                <VBox spacing="12">
-                    <Label text="• Đồng bộ hoá thời gian thực" style="-fx-text-fill: rgba(255,255,255,0.9); -fx-font-size: 14px;"/>
-                    <Label text="• Nhắc việc đa nền tảng" style="-fx-text-fill: rgba(255,255,255,0.9); -fx-font-size: 14px;"/>
-                    <Label text="• Tính năng email Outlook" style="-fx-text-fill: rgba(255,255,255,0.9); -fx-font-size: 14px;"/>
+            <VBox alignment="CENTER_LEFT" spacing="24" prefWidth="340" style="-fx-background-color: -fx-primary; -fx-background-radius: 12 0 0 12; -fx-padding: 48;">
+                <Label text="To-do Desktop" style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: 800;"/>
+                <Label text="Quản lý công việc thông minh" wrapText="true" style="-fx-text-fill: rgba(255,255,255,0.9); -fx-font-size: 16px; -fx-line-spacing: 6;"/>
+                <VBox spacing="16">
+                    <Label text="• Đồng bộ hoá thời gian thực" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: 600;"/>
+                    <Label text="• Nhắc việc đa nền tảng" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: 600;"/>
+                    <Label text="• Tích hợp Outlook" style="-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: 600;"/>
                 </VBox>
                 <Region VBox.vgrow="ALWAYS"/>
                 <Label text="© 2025 Todo Team" style="-fx-text-fill: rgba(255,255,255,0.6); -fx-font-size: 12px;"/>
             </VBox>
         </left>
         <center>
-            <VBox fx:id="loginFormContainer" alignment="CENTER" spacing="20" style="-fx-padding: 56 64;" maxWidth="400">
+            <VBox fx:id="loginFormContainer" alignment="CENTER" spacing="24" style="-fx-padding: 48 64; -fx-background-color: white; -fx-background-radius: 0 12 12 0;" maxWidth="460">
                 <!-- Hidden focusable node to remove focus from text fields -->
                 <Region fx:id="focusDummy" prefWidth="0" prefHeight="0" focusTraversable="true" visible="false"/>
-                <VBox spacing="6" alignment="CENTER_LEFT" maxWidth="360">
-                    <Label text="Đăng nhập" style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #111827;"/>
-                    <Label text="Chào mừng bạn trở lại!" style="-fx-text-fill: #4b5563; -fx-font-size: 14px;"/>
+                
+                <VBox spacing="8" alignment="CENTER_LEFT" maxWidth="360">
+                    <Label text="Đăng nhập" styleClass="header-large"/>
+                    <Label text="Chào mừng bạn trở lại!" styleClass="text-muted"/>
                 </VBox>
-                <VBox spacing="14" maxWidth="360">
-                    <TextField fx:id="emailField" promptText="Email" maxWidth="Infinity" prefHeight="52" style="-fx-background-radius: 14; -fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 14; -fx-padding: 0 18; -fx-font-size: 15px; -fx-prompt-text-fill: #9ca3af; -fx-text-fill: #111827; -fx-border-width: 2;">
-                        <styleClass>
-                            <String fx:value="form-field"/>
-                        </styleClass>
-                    </TextField>
-                    <PasswordField fx:id="passwordField" promptText="Mật khẩu" maxWidth="Infinity" prefHeight="52" style="-fx-background-radius: 14; -fx-background-color: #f9fafb; -fx-border-color: #e5e7eb; -fx-border-radius: 14; -fx-padding: 0 18; -fx-font-size: 15px; -fx-prompt-text-fill: #9ca3af; -fx-text-fill: #111827; -fx-border-width: 2;">
-                        <styleClass>
-                            <String fx:value="form-field"/>
-                        </styleClass>
-                    </PasswordField>
+                
+                <VBox spacing="16" maxWidth="360">
+                    <TextField fx:id="emailField" promptText="Email" maxWidth="Infinity" prefHeight="48" styleClass="text-field"/>
+                    <PasswordField fx:id="passwordField" promptText="Mật khẩu" maxWidth="Infinity" prefHeight="48" styleClass="text-field"/>
                 </VBox>
-                <Button fx:id="signInButton" text="Đăng nhập" maxWidth="360" prefHeight="52" onAction="#onSignIn" style="-fx-background-color: linear-gradient(to right, #3b82f6, #2563eb); -fx-background-radius: 14; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 600; -fx-cursor: hand;">
-                    <styleClass>
-                        <String fx:value="primary-button"/>
-                    </styleClass>
-                </Button>
-                <Hyperlink fx:id="forgotPasswordLink" text="Quên mật khẩu?" onAction="#onForgotPassword" style="-fx-text-fill: #2563eb; -fx-font-size: 14px; -fx-font-weight: 500; -fx-underline: false; -fx-cursor: hand;"/>
-                <Separator maxWidth="360"/>
-                <Button fx:id="registerButton" text="Tạo tài khoản mới" maxWidth="360" prefHeight="52" onAction="#onRegister" style="-fx-background-color: #f8fafc; -fx-border-color: #e2e8f0; -fx-border-width: 2; -fx-background-radius: 14; -fx-text-fill: #1e293b; -fx-font-size: 15px; -fx-font-weight: 500; -fx-cursor: hand;">
-                    <styleClass>
-                        <String fx:value="secondary-button"/>
-                    </styleClass>
-                </Button>
-                <Label fx:id="statusLabel" textFill="#6b7280" wrapText="true" maxWidth="360" style="-fx-font-size: 13px; -fx-alignment: center-left;"/>
+                
+                <VBox spacing="16" maxWidth="360">
+                    <Button fx:id="signInButton" text="Đăng nhập" maxWidth="Infinity" prefHeight="48" onAction="#onSignIn" styleClass="button-primary"/>
+                    <Button fx:id="registerButton" text="Tạo tài khoản mới" maxWidth="Infinity" prefHeight="48" onAction="#onRegister" styleClass="button-secondary"/>
+                </VBox>
+                
+                <Hyperlink fx:id="forgotPasswordLink" text="Quên mật khẩu?" onAction="#onForgotPassword" style="-fx-text-fill: -fx-primary; -fx-underline: false; -fx-font-weight: 600;"/>
+                
+                <Label fx:id="statusLabel" wrapText="true" maxWidth="360" styleClass="text-caption"/>
             </VBox>
         </center>
     </BorderPane>

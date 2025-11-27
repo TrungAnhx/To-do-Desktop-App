@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
@@ -42,13 +43,18 @@ public final class DeadlineOverviewController {
     private DeadlineService deadlineService;
     private TaskService taskService;
     private boolean initialized;
-    private static final String BASE_STATUS_STYLE = "-fx-background-radius: 10; -fx-padding: 6 12; -fx-font-weight: 600; -fx-font-size: 12px;";
 
     @FXML
     private ListView<Deadline> deadlineList;
 
     @FXML
     private TextField searchField;
+    
+    @FXML
+    private javafx.scene.Parent placeholderView;
+    
+    @FXML
+    private PlaceholderController placeholderViewController;
 
     public void setDeadlineService(DeadlineService deadlineService) {
         this.deadlineService = Objects.requireNonNull(deadlineService);
@@ -66,12 +72,76 @@ public final class DeadlineOverviewController {
         if (searchField != null) {
             searchField.textProperty().addListener((obs, oldValue, newValue) -> applySearchFilter(newValue));
         }
+        
+        if (placeholderViewController != null) {
+            placeholderViewController.setData("📝", "Không có công việc nào", "Bạn chưa có công việc nào trong danh sách này.");
+            placeholderViewController.setAction("Tạo công việc mới", this::onAddDeadline);
+        }
+        
+        filteredDeadlines.addListener((javafx.collections.ListChangeListener<Deadline>) c -> updatePlaceholder());
+        
         initialized = true;
         loadDeadlinesIfReady();
     }
+    
+    private void updatePlaceholder() {
+        boolean isEmpty = filteredDeadlines.isEmpty();
+        if (placeholderView != null) {
+            placeholderView.setVisible(isEmpty);
+            placeholderView.setManaged(isEmpty);
+        }
+        if (deadlineList != null) {
+            deadlineList.setVisible(!isEmpty);
+            deadlineList.setManaged(!isEmpty);
+        }
+    }
 
     @FXML
-    private void onAddDeadline() {
+    public void onAddDeadline() {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/ui/add-task-dialog.fxml"));
+            javafx.scene.control.DialogPane dialogPane = loader.load();
+            
+            javafx.scene.control.Dialog<Task> dialog = new javafx.scene.control.Dialog<>();
+            dialog.setDialogPane(dialogPane);
+            dialog.setTitle("Thêm công việc");
+            
+            // Lookup controls
+            TextField titleField = (TextField) dialogPane.lookup("#titleField");
+            javafx.scene.control.TextArea descriptionArea = (javafx.scene.control.TextArea) dialogPane.lookup("#descriptionArea");
+            javafx.scene.control.DatePicker dueDatePicker = (javafx.scene.control.DatePicker) dialogPane.lookup("#dueDatePicker");
+            
+            dialog.setResultConverter(buttonType -> {
+                if (buttonType == javafx.scene.control.ButtonType.OK) {
+                    String title = titleField.getText();
+                    String desc = descriptionArea.getText();
+                    java.time.LocalDate date = dueDatePicker.getValue();
+                    
+                    if (title == null || title.isBlank()) {
+                        return null; // Validation could be better
+                    }
+                    
+                    Instant dueAt = date != null 
+                        ? date.atTime(23, 59).atZone(ZoneId.systemDefault()).toInstant()
+                        : Instant.now().plus(Duration.ofDays(1)); // Default 1 day
+                        
+                    // Generate ID here as Task record requires non-null ID
+                    String newId = java.util.UUID.randomUUID().toString();
+                    return new Task(newId, title, desc, dueAt, Task.TaskStatus.TODO, false);
+                }
+                return null;
+            });
+            
+            dialog.showAndWait().ifPresent(task -> {
+                if (taskService != null) {
+                    taskService.saveTask(task)
+                        .thenRun(() -> javafx.application.Platform.runLater(this::loadDeadlinesIfReady));
+                }
+            });
+            
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private Callback<ListView<Deadline>, ListCell<Deadline>> createCellFactory() {
@@ -90,7 +160,10 @@ public final class DeadlineOverviewController {
                     taskList.forEach(task -> tasksById.put(task.id(), task));
                     return deadlineList;
                 })
-                .thenAccept(list -> javafx.application.Platform.runLater(() -> deadlines.setAll(list)))
+                .thenAccept(list -> javafx.application.Platform.runLater(() -> {
+                    deadlines.setAll(list);
+                    updatePlaceholder();
+                }))
                 .exceptionally(ex -> {
                     ex.printStackTrace();
                     return null;
@@ -101,6 +174,7 @@ public final class DeadlineOverviewController {
         String normalized = query == null ? "" : query.trim().toLowerCase();
         if (normalized.isEmpty()) {
             filteredDeadlines.setPredicate(deadline -> true);
+            updatePlaceholder();
             return;
         }
         filteredDeadlines.setPredicate(deadline -> {
@@ -110,6 +184,7 @@ public final class DeadlineOverviewController {
             return (title != null && title.toLowerCase().contains(normalized))
                     || (description != null && description.toLowerCase().contains(normalized));
         });
+        updatePlaceholder();
     }
 
     private final class DeadlineCell extends javafx.scene.control.ListCell<Deadline> {
@@ -119,20 +194,33 @@ public final class DeadlineOverviewController {
         private final Label descriptionLabel = new Label();
         private final Label dueLabel = new Label();
         private final Label statusLabel = new Label();
-        private final VBox textContainer = new VBox(6);
+        private final VBox textContainer = new VBox(4);
         private final VBox trailingContainer = new VBox(6);
-        private final HBox root = new HBox(18);
+        private final HBox content = new HBox(16);
+        private final StackPane cardContainer = new StackPane();
 
         private DeadlineCell() {
-            accent.setPrefWidth(6);
+            // Card Accent (Left colored bar) - Controlled by status class now
+            accent.setPrefWidth(4);
             accent.setMaxHeight(Double.MAX_VALUE);
             VBox.setVgrow(accent, Priority.ALWAYS);
+            accent.setVisible(false); // We use border for accent now
+            accent.setManaged(false);
 
-            titleLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: 600;");
-            descriptionLabel.setStyle("-fx-text-fill: rgba(226,232,240,0.75); -fx-font-size: 13px;");
-            dueLabel.setStyle("-fx-text-fill: rgba(148,163,184,0.85); -fx-font-size: 12px;");
-            statusLabel.setStyle(BASE_STATUS_STYLE);
+            // Typography
+            titleLabel.getStyleClass().add("text-subject");
+            titleLabel.setStyle("-fx-font-weight: bold;");
+            
+            descriptionLabel.getStyleClass().add("text-muted");
+            descriptionLabel.setWrapText(false);
+            descriptionLabel.setMaxWidth(400);
+            
+            dueLabel.getStyleClass().add("text-caption");
 
+            // Status Badge
+            statusLabel.getStyleClass().add("status-badge");
+
+            // Layout
             textContainer.getChildren().addAll(titleLabel, descriptionLabel, dueLabel);
             textContainer.setAlignment(Pos.CENTER_LEFT);
 
@@ -142,12 +230,16 @@ public final class DeadlineOverviewController {
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
-            root.setPadding(new Insets(18));
-            root.setAlignment(Pos.CENTER_LEFT);
-            root.setStyle("-fx-background-color: rgba(15,23,42,0.78); -fx-background-radius: 20;");
-            root.getChildren().addAll(accent, textContainer, spacer, trailingContainer);
+            content.setAlignment(Pos.CENTER_LEFT);
+            content.setPadding(new Insets(16));
+            content.getChildren().addAll(textContainer, spacer, trailingContainer);
+            
+            // Card wrapper
+            cardContainer.getStyleClass().add("card-cell");
+            cardContainer.getChildren().add(content);
 
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            getStyleClass().add("list-cell");
         }
 
         @Override
@@ -169,35 +261,45 @@ public final class DeadlineOverviewController {
             ZonedDateTime zonedDateTime = item.dueAt().atZone(zoneId);
             dueLabel.setText("Hết hạn: " + zonedDateTime.format(DEADLINE_FORMATTER));
 
+            // Apply Status Style
             StatusStyle style = computeStatusStyle(item.dueAt());
             statusLabel.setText(style.label());
-            statusLabel.setStyle(BASE_STATUS_STYLE + " -fx-text-fill: " + style.textColor() + "; -fx-background-color: " + style.backgroundColor() + ";");
-            accent.setStyle("-fx-background-color: " + style.accentColor() + "; -fx-background-radius: 4 0 0 4;");
+            
+            // Clear old status classes
+            statusLabel.getStyleClass().removeAll("status-overdue", "status-soon", "status-normal", "status-safe");
+            statusLabel.getStyleClass().add(style.cssClass());
 
-            setGraphic(root);
+            setGraphic(cardContainer);
         }
     }
 
     private StatusStyle computeStatusStyle(Instant dueAt) {
         Instant now = Instant.now();
         Duration duration = Duration.between(now, dueAt);
+        
+        // Overdue
         if (duration.isNegative()) {
             long hours = Math.abs(duration.toHours());
-            String label = hours >= 24 ? "Đã quá hạn" : "Quá hạn " + hours + " giờ";
-            return new StatusStyle(label, "#f87171", "rgba(248,113,113,0.18)", "#ef4444");
+            String label = hours >= 24 ? "Đã quá hạn" : "Quá hạn " + hours + "h";
+            return new StatusStyle(label, "status-overdue");
         }
+        
         long minutes = duration.toMinutes();
+        // Closing soon (< 2h)
         if (minutes <= 120) {
-            return new StatusStyle("Sắp đến hạn", "#facc15", "rgba(250,204,21,0.18)", "#eab308");
+            return new StatusStyle("Sắp đến hạn", "status-soon");
         }
+        
         long hours = duration.toHours();
+        // Today (< 24h)
         if (hours < 24) {
-            return new StatusStyle("Còn " + hours + " giờ", "#38bdf8", "rgba(56,189,248,0.18)", "#0ea5e9");
+            return new StatusStyle("Còn " + hours + "h", "status-normal");
         }
+        
         long days = duration.toDays();
-        return new StatusStyle("Còn " + days + " ngày", "#34d399", "rgba(52,211,153,0.18)", "#22c55e");
+        return new StatusStyle("Còn " + days + " ngày", "status-safe");
     }
 
-    private record StatusStyle(String label, String textColor, String backgroundColor, String accentColor) {
+    private record StatusStyle(String label, String cssClass) {
     }
 }

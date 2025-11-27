@@ -1,400 +1,361 @@
-/* ==================== MODERN TODO DESKTOP STYLES ==================== */
+/* ==================== PREMIUM LIQUID GLASS THEME ==================== */
 
-/* Root Color Scheme */
 .root {
-    -fx-primary: #3b82f6;
-    -fx-primary-dark: #2563eb;
-    -fx-primary-light: #60a5fa;
-    -fx-secondary: #8b5cf6;
-    -fx-success: #10b981;
-    -fx-warning: #f59e0b;
-    -fx-danger: #ef4444;
-    -fx-text-primary: #f8fafc;
-    -fx-text-secondary: #cbd5e1;
-    -fx-text-tertiary: #94a3b8;
-    -fx-bg-card: rgba(30, 41, 59, 0.5);
-    -fx-bg-hover: rgba(59, 130, 246, 0.1);
+    /* --- Color Palette (macOS Big Sur Inspired) --- */
+    -fx-bg-app: linear-gradient(to bottom right, #E0EAFC 0%, #CFDEF3 100%); /* Clean airy gradient */
+    
+    /* Brand Colors */
+    -fx-primary: #007AFF;       /* Apple Blue */
+    -fx-primary-gradient: linear-gradient(to bottom right, #007AFF, #005ECB);
+    
+    /* Text */
+    -fx-text-main: #1D1D1F;     /* Near Black */
+    -fx-text-body: #3A3A3C;
+    -fx-text-muted: #86868B;
+    
+    /* Status Colors */
+    -fx-color-danger: #FF3B30;
+    -fx-color-success: #34C759;
+    -fx-color-warning: #FF9500;
+
+    /* Fonts */
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
+    -fx-font-size: 14px;
 }
 
 /* ==================== SCROLL BARS ==================== */
 .scroll-pane {
     -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
 }
 
 .scroll-bar {
     -fx-background-color: transparent;
+    -fx-pref-width: 10;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: rgba(148, 163, 184, 0.3);
-    -fx-background-radius: 8px;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-radius: 5px;
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: rgba(148, 163, 184, 0.5);
+    -fx-background-color: rgba(0, 0, 0, 0.4);
 }
 
 .scroll-bar .track {
     -fx-background-color: transparent;
 }
 
-/* ==================== BUTTONS ==================== */
+/* ==================== BUTTONS (Liquid Style) ==================== */
 .button {
     -fx-cursor: hand;
-    -fx-background-insets: 0;
+    -fx-background-radius: 20px; /* Fully rounded pill */
+    -fx-padding: 10 24;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
     -fx-border-width: 0;
 }
 
-.button:hover {
-    -fx-opacity: 0.9;
+/* Primary Action */
+.button-primary {
+    -fx-background-color: -fx-primary-gradient;
+    -fx-text-fill: white;
+    /* Soft glow shadow */
+    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.4), 12, 0.0, 0, 4);
+}
+
+.button-primary:hover {
+    -fx-background-color: linear-gradient(to bottom right, #005ECB, #004BB5);
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
 }
 
-.button:pressed {
+.button-primary:pressed {
+    -fx-background-color: #004BB5;
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
+    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.2), 6, 0.0, 0, 2);
 }
 
-.button-primary {
-    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
-    -fx-text-fill: white;
-    -fx-font-weight: 600;
-    -fx-background-radius: 12px;
-    -fx-padding: 12 24;
-    -fx-font-size: 14px;
-}
-
+/* Secondary / Ghost */
 .button-secondary {
-    -fx-background-color: rgba(148, 163, 184, 0.2);
-    -fx-text-fill: rgba(226, 232, 240, 0.9);
-    -fx-font-weight: 600;
-    -fx-background-radius: 12px;
-    -fx-padding: 12 24;
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-text-fill: -fx-text-main;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: rgba(0, 0, 0, 0.1);
+    -fx-border-width: 1;
 }
 
+.button-secondary:hover {
+    -fx-background-color: white;
+    -fx-text-fill: -fx-primary;
+    -fx-border-color: -fx-primary;
+}
+
+/* Danger Button */
 .button-danger {
-    -fx-background-color: rgba(239, 68, 68, 0.15);
-    -fx-text-fill: #f87171;
-    -fx-font-weight: 600;
-    -fx-background-radius: 12px;
-    -fx-padding: 12 24;
-}
-
-.button-success {
-    -fx-background-color: linear-gradient(to right, #10b981, #059669);
-    -fx-text-fill: white;
-    -fx-font-weight: 600;
-    -fx-background-radius: 12px;
-    -fx-padding: 12 24;
-}
-
-/* ==================== NAVIGATION TOGGLES ==================== */
-.nav-toggle {
-    -fx-background-color: transparent;
-    -fx-text-fill: rgba(226, 232, 240, 0.7);
-    -fx-font-size: 15px;
-    -fx-font-weight: 600;
-    -fx-padding: 14 32;
-    -fx-background-radius: 12px;
-    -fx-cursor: hand;
-}
-
-.nav-toggle:hover {
-    -fx-background-color: rgba(59, 130, 246, 0.15);
-    -fx-text-fill: rgba(226, 232, 240, 0.95);
-}
-
-.nav-toggle:selected,
-.nav-toggle-active {
-    -fx-background-color: linear-gradient(to right, rgba(59, 130, 246, 0.25), rgba(37, 99, 235, 0.2));
-    -fx-text-fill: #60a5fa;
-    -fx-border-color: rgba(96, 165, 250, 0.3);
-    -fx-border-width: 0 0 3 0;
-}
-
-/* ==================== TEXT FIELDS ==================== */
-.text-field,
-.password-field {
-    -fx-background-color: rgba(255, 255, 255, 0.08);
-    -fx-text-fill: white;
-    -fx-prompt-text-fill: rgba(255, 255, 255, 0.45);
-    -fx-background-radius: 12px;
-    -fx-padding: 12 16;
-    -fx-font-size: 14px;
-    -fx-border-color: rgba(148, 163, 184, 0.2);
+    -fx-background-color: rgba(255, 59, 48, 0.1);
+    -fx-text-fill: -fx-color-danger;
+    -fx-border-color: -fx-color-danger;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
     -fx-border-width: 1;
-    -fx-border-radius: 12px;
 }
 
-.text-field:focused,
-.password-field:focused {
-    -fx-background-color: rgba(255, 255, 255, 0.12);
-    -fx-border-color: rgba(59, 130, 246, 0.5);
-    -fx-border-width: 2;
-    -fx-prompt-text-fill: rgba(255, 255, 255, 0.3);
-}
-
-/* Hiển thị lại prompt text khi unfocus và empty */
-.text-field:empty,
-.password-field:empty {
-    -fx-prompt-text-fill: rgba(255, 255, 255, 0.45);
-}
-
-/* Ẩn cursor (caret) trong text field khi không focus */
-.text-field:unfocused .caret,
-.password-field:unfocused .caret {
-    -fx-stroke: transparent;
-    -fx-stroke-width: 0;
-}
-
-/* Ẩn caret bằng cách làm cho nó trong suốt */
-.text-field .text .caret,
-.password-field .text .caret {
-    -fx-stroke: transparent;
-}
-
-.text-field:focused .text .caret,
-.password-field:focused .text .caret {
-    -fx-stroke: #111827;
-    -fx-stroke-width: 1;
-}
-
-.text-area {
-    -fx-control-inner-background: rgba(255, 255, 255, 0.08);
+.button-danger:hover {
+    -fx-background-color: -fx-color-danger;
     -fx-text-fill: white;
-    -fx-prompt-text-fill: rgba(255, 255, 255, 0.4);
-    -fx-background-radius: 12px;
-    -fx-border-color: rgba(148, 163, 184, 0.2);
-    -fx-border-width: 1;
-    -fx-border-radius: 12px;
 }
 
-.text-area:focused {
-    -fx-control-inner-background: rgba(255, 255, 255, 0.12);
-    -fx-border-color: rgba(59, 130, 246, 0.5);
-    -fx-border-width: 2;
-}
-
-.text-area .content {
+/* Icon Only */
+.button-icon {
     -fx-background-color: transparent;
+    -fx-padding: 8;
+    -fx-text-fill: -fx-text-muted;
+    -fx-background-radius: 50%;
 }
 
-/* ==================== LIST VIEW ==================== */
-.list-view {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
+.button-icon:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-text-fill: -fx-text-main;
+}
+
+/* FAB */
+.fab {
+    -fx-background-color: -fx-primary-gradient;
+    -fx-text-fill: white;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 56px;
+    -fx-pref-height: 56px;
+    -fx-font-size: 24px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.5), 16, 0.4, 0, 6);
     -fx-padding: 0;
 }
 
-.list-cell {
-    -fx-background-color: rgba(30, 41, 59, 0.4);
-    -fx-text-fill: white;
-    -fx-padding: 16 20;
+.fab:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+/* ==================== INPUTS (Rounded Liquid Glass) ==================== */
+.text-field, .text-area, .search-bar {
+    -fx-background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent */
+    -fx-background-radius: 24px; /* Fully rounded pill shape */
+    -fx-border-radius: 24px;
+    -fx-border-color: rgba(0, 0, 0, 0.1);
+    -fx-border-width: 1;
+    -fx-padding: 12 20;
+    -fx-text-fill: -fx-text-main;
+    -fx-prompt-text-fill: -fx-text-muted;
+    -fx-font-size: 14px;
+}
+
+/* Focus State - Glow */
+.text-field:focused, .text-area:focused, .search-bar:focused {
+    -fx-background-color: white;
+    -fx-border-color: -fx-primary;
+    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.25), 8, 0.0, 0, 0);
+}
+
+.text-area {
+    -fx-background-radius: 16px; /* Slightly less rounded for large areas */
+    -fx-border-radius: 16px;
+}
+
+/* ==================== SIDEBAR (Frosted Glass) ==================== */
+.sidebar {
+    -fx-background-color: rgba(255, 255, 255, 0.7); /* Frosted effect base */
+    -fx-background-radius: 0 24px 24px 0; /* Round right corners */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 20, 0.0, 4, 0);
+    -fx-border-color: rgba(255, 255, 255, 0.4);
+    -fx-border-width: 0 1 0 0;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-muted;
+    -fx-font-weight: 600;
+    -fx-font-size: 15px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 20;
     -fx-background-radius: 12px;
-    -fx-background-insets: 0 0 8 0;
-}
-
-.list-cell:hover {
-    -fx-background-color: rgba(59, 130, 246, 0.12);
     -fx-cursor: hand;
+    -fx-graphic-text-gap: 16px;
+    -fx-border-width: 0;
 }
 
-.list-cell:selected {
-    -fx-background-color: rgba(59, 130, 246, 0.25);
+.nav-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-text-fill: -fx-text-main;
+}
+
+.nav-button:selected, 
+.nav-button-active {
+    -fx-background-color: rgba(0, 122, 255, 0.1);
+    -fx-text-fill: -fx-primary;
+    -fx-font-weight: 800;
+}
+
+/* ==================== CARDS (Floating Glass) ==================== */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-padding: 0 12 0 0;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 16 0;
+    -fx-border-width: 0;
 }
 
 .list-cell:empty {
     -fx-background-color: transparent;
 }
 
-/* ==================== CHECK BOX ==================== */
-.check-box {
-    -fx-text-fill: rgba(226, 232, 240, 0.9);
-    -fx-font-size: 14px;
-}
-
-.check-box .box {
-    -fx-background-color: rgba(255, 255, 255, 0.08);
-    -fx-border-color: rgba(148, 163, 184, 0.3);
-    -fx-border-radius: 6px;
-    -fx-background-radius: 6px;
-}
-
-.check-box:selected .box {
-    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
-    -fx-border-color: transparent;
-}
-
-.check-box .mark {
-    -fx-background-color: white;
-}
-
-/* ==================== CARDS ==================== */
-.card {
-    -fx-background-color: rgba(30, 41, 59, 0.6);
+.card, .card-cell {
+    -fx-background-color: rgba(255, 255, 255, 0.85);
     -fx-background-radius: 16px;
-    -fx-padding: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0.2, 0, 4);
-}
-
-.card-glass {
-    -fx-background-color: rgba(30, 41, 59, 0.5);
-    -fx-background-radius: 20px;
-    -fx-padding: 24;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 16, 0.15, 0, 6);
-    -fx-border-color: rgba(148, 163, 184, 0.1);
+    -fx-border-radius: 16px;
+    /* Soft multi-layer shadow for depth */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.04), 10, 0.0, 0, 4);
+    -fx-border-color: rgba(255, 255, 255, 0.8);
     -fx-border-width: 1;
-    -fx-border-radius: 20px;
+    -fx-padding: 20;
 }
 
-/* ==================== LABELS ==================== */
-.label-title {
-    -fx-text-fill: white;
-    -fx-font-size: 24px;
+/* Hover Lift */
+.list-cell:filled:hover .card-cell {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 122, 255, 0.15), 16, 0.0, 0, 8);
+    -fx-translate-y: -2;
+}
+
+/* Unread Card */
+.card-unread {
+    -fx-background-color: white;
+    -fx-border-color: -fx-primary;
+    -fx-border-width: 0 0 0 4;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 122, 255, 0.1), 12, 0.0, 0, 4);
+}
+
+/* ==================== TYPOGRAPHY ==================== */
+.header-large {
+    -fx-font-size: 28px;
+    -fx-font-weight: 900;
+    -fx-text-fill: -fx-text-main;
+    -fx-font-family: "Segoe UI Bold", "Inter", sans-serif;
+}
+
+.header-medium {
+    -fx-font-size: 20px;
     -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-main;
 }
 
-.label-subtitle {
-    -fx-text-fill: rgba(226, 232, 240, 0.8);
-    -fx-font-size: 14px;
+.text-body {
+    -fx-font-size: 15px;
+    -fx-text-fill: -fx-text-body;
 }
 
-.label-caption {
-    -fx-text-fill: rgba(148, 163, 184, 0.8);
+.text-muted {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-muted;
+}
+
+.text-caption {
     -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-muted;
+    -fx-font-weight: 600;
+    -fx-text-transform: uppercase;
 }
 
-/* ==================== BADGES ==================== */
-.badge {
-    -fx-background-color: rgba(59, 130, 246, 0.2);
-    -fx-text-fill: #60a5fa;
+.text-sender {
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -fx-text-main;
+}
+
+.text-subject {
+    -fx-font-size: 15px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -fx-text-body;
+}
+
+/* ==================== CHIPS ==================== */
+.filter-chip {
+    -fx-background-color: rgba(255, 255, 255, 0.6);
+    -fx-text-fill: -fx-text-muted;
+    -fx-background-radius: 20px;
+    -fx-border-color: rgba(0,0,0,0.1);
+    -fx-border-radius: 20px;
+    -fx-padding: 8 16;
+    -fx-font-weight: 600;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.filter-chip:selected {
+    -fx-background-color: -fx-primary-gradient;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.3), 8, 0.0, 0, 2);
+}
+
+.filter-chip:hover {
+    -fx-background-color: white;
+    -fx-border-color: -fx-primary;
+    -fx-text-fill: -fx-primary;
+}
+
+.filter-chip:selected:hover {
+    -fx-background-color: -fx-primary-gradient;
+    -fx-text-fill: white;
+}
+
+/* ==================== AVATAR ==================== */
+.avatar-circle {
+    -fx-background-color: linear-gradient(to bottom right, #5856D6, #AF52DE); /* Purple Gradient */
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.0, 0, 3);
+}
+
+.avatar-text {
+    -fx-fill: white;
+    -fx-font-weight: 800;
+    -fx-font-size: 16px;
+}
+
+/* ==================== STATUS BADGES ==================== */
+.status-badge {
     -fx-background-radius: 12px;
-    -fx-padding: 4 12;
+    -fx-padding: 6 12;
     -fx-font-size: 11px;
     -fx-font-weight: 700;
 }
 
-.badge-success {
-    -fx-background-color: rgba(16, 185, 129, 0.2);
-    -fx-text-fill: #34d399;
+.status-overdue {
+    -fx-background-color: rgba(255, 59, 48, 0.1);
+    -fx-text-fill: -fx-color-danger;
 }
 
-.badge-warning {
-    -fx-background-color: rgba(245, 158, 11, 0.2);
-    -fx-text-fill: #fbbf24;
+.status-soon {
+    -fx-background-color: rgba(255, 149, 0, 0.1);
+    -fx-text-fill: -fx-color-warning;
 }
 
-.badge-danger {
-    -fx-background-color: rgba(239, 68, 68, 0.2);
-    -fx-text-fill: #f87171;
+.status-normal {
+    -fx-background-color: rgba(0, 122, 255, 0.1);
+    -fx-text-fill: -fx-primary;
 }
 
-/* ==================== SEPARATORS ==================== */
-.separator {
-    -fx-background-color: rgba(148, 163, 184, 0.2);
-}
-
-/* ==================== TOOLTIPS ==================== */
-.tooltip {
-    -fx-background-color: rgba(15, 23, 42, 0.95);
-    -fx-text-fill: white;
-    -fx-background-radius: 8px;
-    -fx-padding: 8 12;
-    -fx-font-size: 12px;
-}
-
-/* ==================== HYPERLINKS ==================== */
-.hyperlink {
-    -fx-text-fill: #60a5fa;
-    -fx-underline: false;
-    -fx-cursor: hand;
-}
-
-.hyperlink:hover {
-    -fx-text-fill: #3b82f6;
-}
-
-/* ==================== TOGGLE BUTTON ==================== */
-.toggle-button {
-    -fx-background-color: rgba(148, 163, 184, 0.15);
-    -fx-text-fill: rgba(226, 232, 240, 0.8);
-    -fx-background-radius: 12px;
-    -fx-padding: 10 18;
-    -fx-font-weight: 600;
-    -fx-cursor: hand;
-}
-
-.toggle-button:selected {
-    -fx-background-color: rgba(59, 130, 246, 0.25);
-    -fx-text-fill: #60a5fa;
-}
-
-.toggle-button:hover {
-    -fx-background-color: rgba(59, 130, 246, 0.2);
-}
-
-/* ==================== LOGIN FORM STYLES ==================== */
-.form-field {
-    -fx-background-color: #f9fafb;
-    -fx-border-color: #e5e7eb;
-    -fx-background-radius: 14px;
-    -fx-border-radius: 14px;
-    -fx-border-width: 2;
-    -fx-padding: 0 18;
-    -fx-font-size: 15px;
-    -fx-prompt-text-fill: #9ca3af;
-    -fx-text-fill: #111827;
-}
-
-.form-field:focused {
-    -fx-border-color: #3b82f6;
-    -fx-background-color: #ffffff;
-}
-
-.form-field:hover {
-    -fx-border-color: #c7d2fe;
-}
-
-.primary-button {
-    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
-    -fx-text-fill: white;
-    -fx-font-weight: 600;
-    -fx-background-radius: 14px;
-    -fx-border-radius: 14px;
-    -fx-cursor: hand;
-}
-
-.primary-button:hover {
-    -fx-background-color: linear-gradient(to right, #2563eb, #1d4ed8);
-    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.3), 10, 0.3, 0, 4);
-}
-
-.primary-button:pressed {
-    -fx-background-color: linear-gradient(to right, #1d4ed8, #1e40af);
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
-}
-
-.secondary-button {
-    -fx-background-color: #f8fafc;
-    -fx-border-color: #e2e8f0;
-    -fx-border-width: 2;
-    -fx-text-fill: #1e293b;
-    -fx-font-weight: 500;
-    -fx-background-radius: 14px;
-    -fx-border-radius: 14px;
-    -fx-cursor: hand;
-}
-
-.secondary-button:hover {
-    -fx-background-color: #f1f5f9;
-    -fx-border-color: #cbd5e1;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0.2, 0, 2);
-}
-
-.secondary-button:pressed {
-    -fx-background-color: #e2e8f0;
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
+.status-safe {
+    -fx-background-color: rgba(52, 199, 89, 0.1);
+    -fx-text-fill: -fx-color-success;
 }

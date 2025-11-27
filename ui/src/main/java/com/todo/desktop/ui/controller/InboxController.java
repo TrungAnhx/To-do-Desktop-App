@@ -5,34 +5,21 @@ import com.todo.desktop.domain.usecase.EmailService;
 import com.todo.desktop.domain.usecase.OutlookService;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.geometry.Pos;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -51,6 +38,9 @@ public final class InboxController {
     private ListView<EmailMessage> messageList;
 
     @FXML
+    private ToggleButton allToggle;
+
+    @FXML
     private ToggleButton unreadToggle;
 
     @FXML
@@ -60,7 +50,7 @@ public final class InboxController {
     private VBox inboxMainView;
 
     @FXML
-    private VBox composeEmailView;
+    private StackPane composeEmailView;
 
     @FXML
     private TextField composeToField;
@@ -86,9 +76,15 @@ public final class InboxController {
     @FXML
     private Label composeStatusLabel;
 
+    @FXML
+    private javafx.scene.Parent placeholderView;
+    
+    @FXML
+    private PlaceholderController placeholderViewController;
+
     private final List<File> selectedAttachments = new ArrayList<>();
     private int currentSkip = 0;
-    private static final int PAGE_SIZE = 500;  // Increase initial load to 500
+    private static final int PAGE_SIZE = 50;
     private boolean isLoadingMore = false;
 
     public void setEmailService(EmailService emailService) {
@@ -118,27 +114,53 @@ public final class InboxController {
             }
         });
         
-        // Auto-load more when scrolling near bottom
+        // Setup Placeholder
+        if (placeholderViewController != null) {
+            placeholderViewController.setData("📭", "Hộp thư trống", "Hiện tại không có email nào để hiển thị.");
+            placeholderViewController.setAction("Làm mới ngay", this::onRefresh);
+        }
+        
+        // Filter logic
+        ToggleGroup filterGroup = new ToggleGroup();
+        if (allToggle != null) allToggle.setToggleGroup(filterGroup);
+        if (unreadToggle != null) unreadToggle.setToggleGroup(filterGroup);
+        if (attachmentToggle != null) attachmentToggle.setToggleGroup(filterGroup);
+        
+        if (filterGroup.getSelectedToggle() == null && allToggle != null) {
+            allToggle.setSelected(true);
+        }
+
+        filterGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> applyFilters());
+        
+        // Listen for list changes to update placeholder
+        filteredItems.addListener((javafx.collections.ListChangeListener<EmailMessage>) c -> updatePlaceholder());
+        
+        // Auto-load more on scroll
         messageList.setOnScroll(event -> {
             ScrollBar scrollBar = getVerticalScrollbar(messageList);
             if (scrollBar != null && !isLoadingMore) {
                 double scrollPosition = scrollBar.getValue();
                 double maxScroll = scrollBar.getMax();
-                // Load more when scrolled to 90% of the list
                 if (scrollPosition >= (maxScroll * 0.9)) {
                     loadMoreInbox();
                 }
             }
         });
-        
-        if (unreadToggle != null) {
-            unreadToggle.selectedProperty().addListener((obs, oldValue, newValue) -> applyFilters());
-        }
-        if (attachmentToggle != null) {
-            attachmentToggle.selectedProperty().addListener((obs, oldValue, newValue) -> applyFilters());
-        }
+
         initialized = true;
         refreshInboxIfReady();
+    }
+    
+    private void updatePlaceholder() {
+        boolean isEmpty = filteredItems.isEmpty();
+        if (placeholderView != null) {
+            placeholderView.setVisible(isEmpty);
+            placeholderView.setManaged(isEmpty);
+        }
+        if (messageList != null) {
+            messageList.setVisible(!isEmpty);
+            messageList.setManaged(!isEmpty);
+        }
     }
     
     private ScrollBar getVerticalScrollbar(ListView<?> listView) {
@@ -159,37 +181,30 @@ public final class InboxController {
 
     @FXML
     private void onLoadMore() {
-        if (isLoadingMore) {
-            return;
-        }
-        // Allow manual load even if > 500 emails
         loadMoreInbox();
     }
     
     @FXML
-    private void onRefresh() {
+    public void onRefresh() {
         currentSkip = 0;
         refreshInboxIfReady();
     }
 
     @FXML
-    private void onCompose() {
+    public void onCompose() {
         if (outlookService == null || !outlookService.isConnected()) {
-            // Show message to connect Outlook first
-            return;
+             // In a real app, show a toast or alert here
+             System.out.println("Outlook not connected");
+             return;
         }
         composeEmailView.setVisible(true);
         composeEmailView.setManaged(true);
-        inboxMainView.setVisible(false);
-        inboxMainView.setManaged(false);
     }
 
     @FXML
     private void onCloseCompose() {
         composeEmailView.setVisible(false);
         composeEmailView.setManaged(false);
-        inboxMainView.setVisible(true);
-        inboxMainView.setManaged(true);
         clearComposeForm();
     }
 
@@ -242,23 +257,20 @@ public final class InboxController {
     }
 
     private void handleSendSuccess() {
-        setComposeStatus("✓ Gửi email thành công!", false);
+        setComposeStatus("✓ Gửi thành công", false);
         sendEmailButton.setDisable(false);
-        // Auto close after 1.5 seconds
         new Thread(() -> {
             try {
-                Thread.sleep(1500);
+                Thread.sleep(1000);
                 Platform.runLater(this::onCloseCompose);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            } catch (InterruptedException e) { e.printStackTrace(); }
         }).start();
     }
 
     private void handleSendError(Throwable ex) {
         ex.printStackTrace();
         String message = ex.getCause() != null ? ex.getCause().getMessage() : ex.getMessage();
-        setComposeStatus("Gửi email thất bại: " + message, true);
+        setComposeStatus("Lỗi: " + message, true);
         sendEmailButton.setDisable(false);
     }
 
@@ -274,11 +286,7 @@ public final class InboxController {
     private void setComposeStatus(String message, boolean isError) {
         if (composeStatusLabel != null) {
             composeStatusLabel.setText(message);
-            if (isError) {
-                composeStatusLabel.setStyle("-fx-text-fill: #f87171; -fx-font-size: 13px;");
-            } else {
-                composeStatusLabel.setStyle("-fx-text-fill: rgba(226,232,240,0.8); -fx-font-size: 13px;");
-            }
+            composeStatusLabel.setStyle(isError ? "-fx-text-fill: -fx-danger;" : "-fx-text-fill: -fx-text-secondary;");
         }
     }
 
@@ -288,22 +296,22 @@ public final class InboxController {
             attachmentListBox.setVisible(false);
             attachmentListBox.setManaged(false);
         } else {
-            attachmentCountLabel.setText(selectedAttachments.size() + " tệp đã chọn");
+            attachmentCountLabel.setText(selectedAttachments.size() + " tệp");
             attachmentListBox.getChildren().clear();
             
             for (File file : selectedAttachments) {
                 HBox row = new HBox(10);
                 row.setAlignment(Pos.CENTER_LEFT);
-                row.setStyle("-fx-background-color: rgba(59,130,246,0.15); -fx-padding: 6 10; -fx-background-radius: 6;");
                 
                 Label nameLabel = new Label("📎 " + file.getName());
-                nameLabel.setStyle("-fx-text-fill: rgba(226,232,240,0.9); -fx-font-size: 12px;");
+                nameLabel.setStyle("-fx-text-fill: -fx-text-secondary; -fx-font-size: 12px;");
                 
                 Region spacer = new Region();
                 HBox.setHgrow(spacer, Priority.ALWAYS);
                 
                 Button removeBtn = new Button("✕");
-                removeBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #f87171; -fx-cursor: hand; -fx-font-size: 12px;");
+                removeBtn.getStyleClass().add("button-icon");
+                removeBtn.setStyle("-fx-text-fill: -fx-danger; -fx-font-size: 10px;");
                 removeBtn.setOnAction(e -> {
                     selectedAttachments.remove(file);
                     updateAttachmentList();
@@ -319,89 +327,59 @@ public final class InboxController {
     }
 
     private void refreshInboxIfReady() {
-        if (!initialized) {
-            return;
-        }
-        
-        System.out.println("DEBUG: refreshInboxIfReady called");
-        System.out.println("DEBUG: Outlook connected: " + (outlookService != null && outlookService.isConnected()));
-        
-        // Ưu tiên OutlookService nếu đã kết nối
-        if (outlookService != null && outlookService.isConnected()) {
-            System.out.println("DEBUG: Using Outlook service");
-            isLoadingMore = true;
-            outlookService.getInboxMessages(PAGE_SIZE, currentSkip)
-                    .thenAccept(messages -> Platform.runLater(() -> {
-                        System.out.println("DEBUG: Loaded " + messages.size() + " emails from Outlook");
-                        inboxItems.setAll(messages);
-                        currentSkip = PAGE_SIZE;
-                        applyFilters();
-                        isLoadingMore = false;
-                    }))
-                    .exceptionally(ex -> {
-                        ex.printStackTrace();
-                        isLoadingMore = false;
-                        loadFromLocalService();
-                        return null;
-                    });
-        } else if (emailService != null) {
-            System.out.println("DEBUG: Using local email service (Outlook not connected)");
-            loadFromLocalService();
-        } else {
-            System.out.println("DEBUG: No email service available");
-        }
-    }
-    
-    private void loadMoreInboxManual() {
-        if (!initialized || isLoadingMore) {
-            return;
-        }
+        if (!initialized) return;
         
         if (outlookService != null && outlookService.isConnected()) {
             isLoadingMore = true;
+            // Show global loading if explicit refresh (skip=0)
+            if (currentSkip == 0 && messageList.getScene() != null) {
+                com.todo.desktop.ui.util.LoadingService.show((javafx.stage.Stage) messageList.getScene().getWindow(), "Đang tải email...");
+            }
+            
             outlookService.getInboxMessages(PAGE_SIZE, currentSkip)
                     .thenAccept(messages -> Platform.runLater(() -> {
-                        System.out.println("DEBUG: Added " + messages.size() + " more emails (manual)");
-                        inboxItems.addAll(messages);
+                        if (currentSkip == 0) {
+                            inboxItems.clear();
+                            com.todo.desktop.ui.util.LoadingService.hide();
+                        }
+                        if (messages != null) inboxItems.addAll(messages);
                         currentSkip += PAGE_SIZE;
                         applyFilters();
+                        updatePlaceholder();
                         isLoadingMore = false;
                     }))
                     .exceptionally(ex -> {
                         ex.printStackTrace();
+                        isLoadingMore = false;
                         Platform.runLater(() -> {
-                            isLoadingMore = false;
+                            com.todo.desktop.ui.util.LoadingService.hide();
+                            loadFromLocalService();
                         });
                         return null;
                     });
+        } else if (emailService != null) {
+            loadFromLocalService();
         }
     }
     
     private void loadMoreInbox() {
-        if (!initialized || isLoadingMore) {
-            return;
-        }
-        
-        // If we already have lots of emails loaded, don't auto-load more
-        if (inboxItems.size() >= 500) {
-            return;
-        }
+        if (!initialized || isLoadingMore || currentSkip >= 1000) return;
         
         if (outlookService != null && outlookService.isConnected()) {
             isLoadingMore = true;
             outlookService.getInboxMessages(PAGE_SIZE, currentSkip)
                     .thenAccept(messages -> Platform.runLater(() -> {
-                        System.out.println("DEBUG: Added " + messages.size() + " more emails");
-                        inboxItems.addAll(messages);
-                        currentSkip += PAGE_SIZE;
+                        if (messages != null && !messages.isEmpty()) {
+                            inboxItems.addAll(messages);
+                            currentSkip += PAGE_SIZE;
+                        }
                         applyFilters();
+                        updatePlaceholder();
                         isLoadingMore = false;
                     }))
                     .exceptionally(ex -> {
                         ex.printStackTrace();
-                        Platform.runLater(() -> {
-                            isLoadingMore = false;
-                        });
+                        isLoadingMore = false;
                         return null;
                     });
         }
@@ -412,28 +390,27 @@ public final class InboxController {
                 .thenAccept(messages -> Platform.runLater(() -> {
                     inboxItems.setAll(messages);
                     applyFilters();
-                }))
-                .exceptionally(ex -> {
-                    ex.printStackTrace();
-                    return null;
-                });
+                    updatePlaceholder();
+                }));
     }
 
     private void applyFilters() {
+        System.out.println("DEBUG: applyFilters called");
+        if (unreadToggle != null) System.out.println("DEBUG: Unread selected: " + unreadToggle.isSelected());
+        if (allToggle != null) System.out.println("DEBUG: All selected: " + allToggle.isSelected());
+        
         filteredItems.setPredicate(message -> {
-            if (message == null) {
-                return false;
-            }
+            if (message == null) return false;
+            
             boolean unreadOnly = unreadToggle != null && unreadToggle.isSelected();
             boolean attachmentsOnly = attachmentToggle != null && attachmentToggle.isSelected();
-            if (unreadOnly && message.isRead()) {
-                return false;
-            }
-            if (attachmentsOnly && !message.hasAttachments()) {
-                return false;
-            }
+            
+            if (unreadOnly && message.isRead()) return false;
+            if (attachmentsOnly && !message.hasAttachments()) return false;
+            
             return true;
         });
+        updatePlaceholder();
     }
 
     private final class EmailCell extends ListCell<EmailMessage> {
@@ -444,41 +421,52 @@ public final class InboxController {
         private final Label senderLabel = new Label();
         private final Label previewLabel = new Label();
         private final Label timeLabel = new Label();
-        private final HBox root = new HBox(16);
-
-        private static final String UNREAD_STYLE = "-fx-background-color: rgba(49,130,206,0.15); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0.2, 0, 2);";
-        private static final String READ_STYLE = "-fx-background-color: rgba(45,55,72,0.5); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0.15, 0, 1);";
-        private static final String SUBJECT_BASE_STYLE = "-fx-text-fill: #f7fafc; -fx-font-size: 16px; -fx-font-weight: 600;";
-        private static final String SENDER_STYLE = "-fx-text-fill: #e2e8f0; -fx-font-size: 14px; -fx-font-weight: 500;";
-        private static final String PREVIEW_STYLE = "-fx-text-fill: #a0aec0; -fx-font-size: 13px;";
-        private static final String TIME_STYLE = "-fx-text-fill: #a0aec0; -fx-font-size: 12px; -fx-font-weight: 600;";
+        private final Label attachmentIcon = new Label("📎");
+        
+        private final HBox content = new HBox(16);
+        private final StackPane cardContainer = new StackPane();
 
         private EmailCell() {
-            avatarLabel.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: 600;");
-            avatarContainer.setPrefSize(52, 52);
-            avatarContainer.setMaxSize(52, 52);
-            avatarContainer.setStyle("-fx-background-color: linear-gradient(135deg, #3182ce, #1e40af); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.3, 0, 2);");
+            // Avatar
+            avatarLabel.getStyleClass().add("avatar-text");
+            avatarContainer.getStyleClass().add("avatar-circle");
+            avatarContainer.setPrefSize(48, 48);
+            avatarContainer.setMaxSize(48, 48);
             avatarContainer.getChildren().add(avatarLabel);
 
-            subjectLabel.setStyle(SUBJECT_BASE_STYLE);
-            senderLabel.setStyle(SENDER_STYLE);
-            previewLabel.setStyle(PREVIEW_STYLE);
+            // Text Content
+            senderLabel.getStyleClass().add("text-sender");
+            subjectLabel.getStyleClass().add("text-subject");
+            previewLabel.getStyleClass().add("text-muted");
             previewLabel.setWrapText(false);
+            previewLabel.setMaxWidth(500);
 
-            timeLabel.setStyle(TIME_STYLE);
-
-            VBox textContainer = new VBox(6, subjectLabel, senderLabel, previewLabel);
+            // Layout: Sender (Top), Subject + Preview (Bottom)
+            VBox textContainer = new VBox(4);
+            textContainer.getChildren().addAll(senderLabel, subjectLabel, previewLabel);
             textContainer.setAlignment(Pos.CENTER_LEFT);
+
+            // Meta (Time + Attachment)
+            VBox metaContainer = new VBox(4);
+            metaContainer.setAlignment(Pos.TOP_RIGHT);
+            timeLabel.getStyleClass().add("text-caption");
+            attachmentIcon.setStyle("-fx-font-size: 12px; -fx-text-fill: -fx-text-muted;");
+            metaContainer.getChildren().add(timeLabel);
 
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
-            root.setAlignment(Pos.CENTER_LEFT);
-            root.setPadding(new Insets(18));
-            root.setStyle("-fx-cursor: hand;");
-            root.getChildren().addAll(avatarContainer, textContainer, spacer, timeLabel);
-
+            // Inner Content Layout
+            content.setAlignment(Pos.CENTER_LEFT);
+            content.setPadding(new Insets(16));
+            content.getChildren().addAll(avatarContainer, textContainer, spacer, metaContainer);
+            
+            // Card Wrapper
+            cardContainer.getStyleClass().add("card-cell");
+            cardContainer.getChildren().add(content);
+            
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            getStyleClass().add("list-cell");
         }
 
         @Override
@@ -488,26 +476,41 @@ public final class InboxController {
                 setGraphic(null);
                 return;
             }
-            subjectLabel.setText(item.subject() == null || item.subject().isBlank() ? "(Không tiêu đề)" : item.subject());
+
             senderLabel.setText(item.from());
+            subjectLabel.setText(item.subject() == null || item.subject().isBlank() ? "(Không tiêu đề)" : item.subject());
             previewLabel.setText(item.bodyPreview() == null ? "" : item.bodyPreview());
             timeLabel.setText(item.receivedDateTime() == null ? "" : item.receivedDateTime().atZone(ZoneId.systemDefault()).format(INBOX_FORMATTER));
 
             String initial = extractInitial(item.from());
             avatarLabel.setText(initial);
-            avatarContainer.setStyle(!item.isRead()
-                    ? "-fx-background-color: linear-gradient(135deg, #3182ce, #1e40af); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0.3, 0, 2);"
-                    : "-fx-background-color: linear-gradient(135deg, #38a169, #2f855a); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.3, 0, 2);");
+            
+            // Unread Styling
+            cardContainer.getStyleClass().remove("card-unread");
+            if (!item.isRead()) {
+                if (!cardContainer.getStyleClass().contains("card-unread")) {
+                    cardContainer.getStyleClass().add("card-unread");
+                }
+                senderLabel.setStyle("-fx-font-weight: 800;"); // Extra emphasis
+                timeLabel.setStyle("-fx-text-fill: -fx-primary; -fx-font-weight: 700;");
+            } else {
+                senderLabel.setStyle(""); 
+                timeLabel.setStyle("");
+            }
+            
+            // Attachment Icon
+            VBox meta = (VBox) content.getChildren().get(3);
+            if (item.hasAttachments() && !meta.getChildren().contains(attachmentIcon)) {
+                meta.getChildren().add(attachmentIcon);
+            } else if (!item.hasAttachments()) {
+                meta.getChildren().remove(attachmentIcon);
+            }
 
-            root.setStyle(!item.isRead() ? UNREAD_STYLE : READ_STYLE);
-            subjectLabel.setStyle(SUBJECT_BASE_STYLE + (!item.isRead() ? " -fx-font-weight: 700;" : " -fx-font-weight: 600;"));
-            setGraphic(root);
+            setGraphic(cardContainer);
         }
 
         private String extractInitial(String text) {
-            if (text == null || text.isBlank()) {
-                return "?";
-            }
+            if (text == null || text.isBlank()) return "?";
             int codePoint = text.codePointAt(0);
             return new String(Character.toChars(Character.toUpperCase(codePoint)));
         }
