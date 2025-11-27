@@ -38,10 +38,10 @@ public final class InboxController {
     private ListView<EmailMessage> messageList;
 
     @FXML
-    private ToggleButton allToggle;
+    private Button allToggle;
 
     @FXML
-    private ToggleButton unreadToggle;
+    private Button unreadToggle;
 
     @FXML
     private ToggleButton attachmentToggle;
@@ -86,6 +86,7 @@ public final class InboxController {
     private int currentSkip = 0;
     private static final int PAGE_SIZE = 50;
     private boolean isLoadingMore = false;
+    private boolean isUnreadFilter = false;
 
     public void setEmailService(EmailService emailService) {
         this.emailService = Objects.requireNonNull(emailService);
@@ -120,17 +121,38 @@ public final class InboxController {
             placeholderViewController.setAction("Làm mới ngay", this::onRefresh);
         }
         
-        // Filter logic
-        ToggleGroup filterGroup = new ToggleGroup();
-        if (allToggle != null) allToggle.setToggleGroup(filterGroup);
-        if (unreadToggle != null) unreadToggle.setToggleGroup(filterGroup);
-        if (attachmentToggle != null) attachmentToggle.setToggleGroup(filterGroup);
+        // --- Tab Logic with Regular Buttons ---
         
-        if (filterGroup.getSelectedToggle() == null && allToggle != null) {
-            allToggle.setSelected(true);
+        // Default State: All
+        setTabActive(allToggle, true);
+        setTabActive(unreadToggle, false);
+        isUnreadFilter = false;
+
+        if (allToggle != null) {
+            allToggle.setOnAction(e -> {
+                System.out.println("DEBUG: Clicked ALL Toggle");
+                // Switch to ALL
+                isUnreadFilter = false;
+                setTabActive(allToggle, true);
+                setTabActive(unreadToggle, false);
+                applyFilters();
+            });
         }
 
-        filterGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> applyFilters());
+        if (unreadToggle != null) {
+            unreadToggle.setOnAction(e -> {
+                System.out.println("DEBUG: Clicked UNREAD Toggle");
+                // Switch to UNREAD
+                isUnreadFilter = true;
+                setTabActive(unreadToggle, true);
+                setTabActive(allToggle, false);
+                applyFilters();
+            });
+        }
+        
+        if (attachmentToggle != null) {
+            attachmentToggle.selectedProperty().addListener((obs, oldVal, newVal) -> applyFilters());
+        }
         
         // Listen for list changes to update placeholder
         filteredItems.addListener((javafx.collections.ListChangeListener<EmailMessage>) c -> updatePlaceholder());
@@ -151,6 +173,30 @@ public final class InboxController {
         refreshInboxIfReady();
     }
     
+    private void setTabActive(Button btn, boolean active) {
+        if (btn == null) return;
+        if (active) {
+            btn.setStyle("-fx-background-color: linear-gradient(to right, #3B82F6, #2563EB); -fx-text-fill: white; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.3), 8, 0.0, 0, 2);");
+        } else {
+            btn.setStyle("-fx-background-color: white; -fx-text-fill: #64748B; -fx-font-weight: normal; -fx-border-color: #E2E8F0; -fx-border-width: 1;");
+        }
+    }
+
+    private void applyFilters() {
+        filteredItems.setPredicate(message -> {
+            if (message == null) return false;
+            
+            boolean unreadOnly = isUnreadFilter;
+            boolean attachmentsOnly = attachmentToggle != null && attachmentToggle.isSelected();
+            
+            if (unreadOnly && message.isRead()) return false;
+            if (attachmentsOnly && !message.hasAttachments()) return false;
+            
+            return true;
+        });
+        updatePlaceholder();
+    }
+
     private void updatePlaceholder() {
         boolean isEmpty = filteredItems.isEmpty();
         if (placeholderView != null) {
@@ -193,7 +239,6 @@ public final class InboxController {
     @FXML
     public void onCompose() {
         if (outlookService == null || !outlookService.isConnected()) {
-             // In a real app, show a toast or alert here
              System.out.println("Outlook not connected");
              return;
         }
@@ -331,32 +376,29 @@ public final class InboxController {
         
         if (outlookService != null && outlookService.isConnected()) {
             isLoadingMore = true;
-            // Show global loading if explicit refresh (skip=0)
             if (currentSkip == 0 && messageList.getScene() != null) {
                 com.todo.desktop.ui.util.LoadingService.show((javafx.stage.Stage) messageList.getScene().getWindow(), "Đang tải email...");
             }
             
             outlookService.getInboxMessages(PAGE_SIZE, currentSkip)
-                    .thenAccept(messages -> Platform.runLater(() -> {
+                    .whenComplete((messages, ex) -> Platform.runLater(() -> {
                         if (currentSkip == 0) {
-                            inboxItems.clear();
                             com.todo.desktop.ui.util.LoadingService.hide();
                         }
-                        if (messages != null) inboxItems.addAll(messages);
-                        currentSkip += PAGE_SIZE;
-                        applyFilters();
-                        updatePlaceholder();
-                        isLoadingMore = false;
-                    }))
-                    .exceptionally(ex -> {
-                        ex.printStackTrace();
-                        isLoadingMore = false;
-                        Platform.runLater(() -> {
-                            com.todo.desktop.ui.util.LoadingService.hide();
-                            loadFromLocalService();
-                        });
-                        return null;
-                    });
+                        
+                        if (ex != null) {
+                            ex.printStackTrace();
+                            isLoadingMore = false;
+                            if (currentSkip == 0) loadFromLocalService();
+                        } else {
+                            if (currentSkip == 0) inboxItems.clear();
+                            if (messages != null) inboxItems.addAll(messages);
+                            currentSkip += PAGE_SIZE;
+                            applyFilters();
+                            updatePlaceholder();
+                            isLoadingMore = false;
+                        }
+                    }));
         } else if (emailService != null) {
             loadFromLocalService();
         }
@@ -392,25 +434,6 @@ public final class InboxController {
                     applyFilters();
                     updatePlaceholder();
                 }));
-    }
-
-    private void applyFilters() {
-        System.out.println("DEBUG: applyFilters called");
-        if (unreadToggle != null) System.out.println("DEBUG: Unread selected: " + unreadToggle.isSelected());
-        if (allToggle != null) System.out.println("DEBUG: All selected: " + allToggle.isSelected());
-        
-        filteredItems.setPredicate(message -> {
-            if (message == null) return false;
-            
-            boolean unreadOnly = unreadToggle != null && unreadToggle.isSelected();
-            boolean attachmentsOnly = attachmentToggle != null && attachmentToggle.isSelected();
-            
-            if (unreadOnly && message.isRead()) return false;
-            if (attachmentsOnly && !message.hasAttachments()) return false;
-            
-            return true;
-        });
-        updatePlaceholder();
     }
 
     private final class EmailCell extends ListCell<EmailMessage> {

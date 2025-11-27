@@ -301,21 +301,18 @@
     -fx-cursor: hand;
 }
 
-.filter-chip:selected {
+/* Stronger selector for active state */
+.button.filter-chip-active,
+.filter-chip-active {
     -fx-background-color: -fx-primary-gradient;
     -fx-text-fill: white;
     -fx-border-color: transparent;
     -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.3), 8, 0.0, 0, 2);
 }
 
-.filter-chip:hover {
-    -fx-background-color: white;
-    -fx-border-color: -fx-primary;
-    -fx-text-fill: -fx-primary;
-}
-
-.filter-chip:selected:hover {
-    -fx-background-color: -fx-primary-gradient;
+.button.filter-chip-active:hover,
+.filter-chip-active:hover {
+    -fx-background-color: -fx-primary-gradient; /* Keep gradient on hover */
     -fx-text-fill: white;
 }
 

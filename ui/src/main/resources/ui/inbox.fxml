@@ -22,20 +22,24 @@
                 </Button>
             </HBox>
             
-            <!-- Filters -->
-            <HBox spacing="8" alignment="CENTER_LEFT">
-                <ToggleButton fx:id="allToggle" text="Tất cả" selected="true" styleClass="filter-chip"/>
-                <ToggleButton fx:id="unreadToggle" text="Chưa đọc" styleClass="filter-chip"/>
-                <ToggleButton fx:id="attachmentToggle" text="Có tệp đính kèm" styleClass="filter-chip"/>
-            </HBox>
+        <!-- Filter Bar (Direct HBox, no ScrollPane) -->
+        <HBox spacing="8" alignment="CENTER_LEFT" style="-fx-padding: 8 16;">
+            <Button fx:id="allToggle" text="Tất cả" styleClass="filter-chip"/>
+            <Button fx:id="unreadToggle" text="Chưa đọc" styleClass="filter-chip"/>
+            <ToggleButton fx:id="attachmentToggle" text="Có tệp đính kèm" styleClass="filter-chip"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="refreshButton" text="🔄" onAction="#onRefresh" styleClass="button-icon">
+                <tooltip><Tooltip text="Làm mới"/></tooltip>
+            </Button>
+        </HBox>
         </VBox>
 
-        <!-- Email List -->
-        <ListView fx:id="messageList" VBox.vgrow="ALWAYS" styleClass="list-view"/>
+        <!-- Email List Container -->
+        <StackPane VBox.vgrow="ALWAYS">
+            <ListView fx:id="messageList" styleClass="list-view"/>
+            <fx:include fx:id="placeholderView" source="placeholder-view.fxml" visible="false" managed="false"/>
+        </StackPane>
     </VBox>
-
-    <!-- Placeholder View -->
-    <fx:include fx:id="placeholderView" source="placeholder-view.fxml" visible="false" managed="false"/>
 
     <!-- Floating Action Button (Compose) -->
     <Button fx:id="composeButton" onAction="#onCompose" styleClass="fab" StackPane.alignment="BOTTOM_RIGHT">
